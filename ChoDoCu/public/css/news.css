@@ -1,0 +1,499 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    background: #f5f5f5;
+}
+
+.post-page {
+    min-height: 100vh;
+    padding-bottom: 100px;
+}
+
+.post-layout {
+    display: grid;
+    grid-template-columns: 300px 590px;
+    align-items: start;
+    justify-content: center;
+    gap: 22px;
+    padding: 18px 20px 40px;
+}
+
+/* Cột giới thiệu video */
+
+.video-tip {
+    padding: 18px 18px;
+    background: linear-gradient(90deg,
+            #ffffff 0%,
+            #ffffff 48%,
+            #effcf3 48%,
+            #effcf3 100%);
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+}
+
+.video-tip h3 {
+    margin-bottom: 14px;
+    color: #252525;
+    font-size: 21px;
+    line-height: 1.35;
+}
+
+.video-tip p {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 9px 0;
+    color: #6f6f6f;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.video-tip p span {
+    color: #16a34a;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.video-tip strong {
+    color: #575757;
+}
+
+/* Cột nội dung */
+
+.post-content {
+    width: 100%;
+}
+
+.form-card,
+.detail-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+}
+
+.form-card {
+    padding: 16px;
+}
+
+.form-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.form-label-row label {
+    color: #222;
+    font-size: 14px;
+}
+
+.form-label-row label small {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.form-label-row label span,
+.description-box label span {
+    color: #ef4444;
+}
+
+.info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    border: 2px solid #222;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Upload */
+
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 140px;
+    background: #ecfdf3;
+    border: 2px solid #22c55e;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.upload-box:hover {
+    background: #dcfce7;
+    border-color: #15803d;
+}
+
+.upload-icon {
+    width: 48px;
+    height: 48px;
+    color: #16a34a;
+}
+
+.upload-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.upload-box strong {
+    margin-top: 4px;
+    color: #111;
+    font-size: 14px;
+}
+
+.upload-error {
+    margin: 7px 0 18px 12px;
+    color: #ef4444;
+    font-size: 11px;
+}
+
+/* Xem trước hình */
+
+.preview-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.preview-item {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 1px solid #dcdcdc;
+    border-radius: 9px;
+}
+
+.preview-item img,
+.preview-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mô tả */
+
+.description-box {
+    position: relative;
+    width: 100%;
+    height: 278px;
+    border: 2px solid #d8d8d8;
+    border-radius: 13px;
+    overflow: hidden;
+    transition: 0.2s ease;
+}
+
+.description-box:focus-within {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.description-box label {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    z-index: 2;
+    color: #222;
+    font-size: 14px;
+}
+
+.description-box textarea {
+    width: 100%;
+    height: 100%;
+    padding: 38px 14px 58px;
+    border: 0;
+    outline: 0;
+    resize: none;
+    color: #333;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.ai-button {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    padding: 9px 14px;
+    color: #222;
+    background: #f1f3f2;
+    border: 0;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ai-button:hover {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.character-count {
+    margin: 7px 0 8px 12px;
+    color: #777;
+    font-size: 11px;
+}
+
+.description-guide {
+    color: #4c4c4c;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.description-guide strong {
+    color: #222;
+}
+
+.description-guide ul {
+    margin-top: 4px;
+    padding-left: 25px;
+}
+
+/* Thông tin chi tiết */
+
+.detail-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-top: 16px;
+    padding: 18px 16px;
+}
+
+.detail-icon {
+    color: #909090;
+    font-size: 26px;
+}
+
+.detail-card h3 {
+    margin-bottom: 4px;
+    color: #848484;
+    font-size: 16px;
+}
+
+.detail-card p {
+    color: #bababa;
+    font-size: 13px;
+}
+
+/* Nút cố định phía dưới */
+
+.bottom-action {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    padding: 24px 20px 18px;
+    background: #ffffff;
+    border-top: 1px solid #e6e6e6;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.submit-button {
+    width: 560px;
+    height: 42px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    border: 0;
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.submit-button:hover {
+    background: linear-gradient(135deg, #15803d, #16a34a);
+    transform: translateY(-1px);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+/* Responsive */
+
+@media (max-width: 960px) {
+    .post-layout {
+        grid-template-columns: minmax(0, 590px);
+    }
+
+    .video-tip {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .post-layout {
+        display: block;
+        padding: 12px 10px 100px;
+    }
+
+    .video-tip {
+        margin-bottom: 14px;
+    }
+
+    .form-card {
+        padding: 13px;
+    }
+
+    .upload-box {
+        height: 125px;
+    }
+
+    .description-box {
+        height: 240px;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+
+    .preview-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.category-field {
+    margin-bottom: 18px;
+}
+
+.category-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #222;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.category-field label span {
+    color: #ef4444;
+}
+
+.category-field select {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    color: #333;
+    background: #ffffff;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.category-field select:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.field-error {
+    margin-top: 6px;
+    color: #ef4444;
+    font-size: 12px;
+}
+
+.preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.preview-item,
+.add-more-media {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.preview-item {
+    background: #eeeeee;
+    border: 1px solid #dddddd;
+}
+
+.preview-item img,
+.preview-item video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.remove-media {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 3;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.75);
+    border: 0;
+    border-radius: 50%;
+    font-size: 19px;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+.cover-label {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 5px;
+    color: #ffffff;
+    background: #16a34a;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.add-more-media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #15803d;
+    background: #ecfdf3;
+    border: 2px dashed #22c55e;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.add-more-media:hover {
+    background: #dcfce7;
+    border-color: #15803d;
+}
+
+.add-more-icon {
+    font-size: 30px;
+    line-height: 1;
+}
+
+.add-more-media span:last-child {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}

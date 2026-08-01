@@ -11,7 +11,11 @@ body {
 
 /* HEADER */
 .hero {
-    background: linear-gradient(135deg, #5fd65f, #17a84b);
+    background: linear-gradient(135deg,
+            #2fbf71 0%,
+            #39c66f 35%,
+            #46cf76 70%,
+            #4ed97d 100%);
     height: 215px;
     position: relative;
     overflow: hidden;
@@ -87,38 +91,78 @@ body {
 }
 
 .icon {
-    width: 42px;
-    height: 42px;
-    background: rgba(255, 255, 255, .18);
-    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: white;
-    font-size: 20px;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .18);
+
+    color: #fff;
+    font-size: 22px;
+
+    cursor: pointer;
+    transition: all .25s ease;
+
     backdrop-filter: blur(8px);
 }
 
+/* Hover chung */
+.icon:hover {
+    background: #fff;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+}
+
+/* Click */
+.icon:active {
+    transform: scale(.95);
+}
+
+/* Tim */
+.icon:first-child:hover {
+    color: #ef4444;
+}
+
+/* Chuông */
+.icon:last-child:hover {
+    color: #f59e0b;
+}
+
+
 .login {
-    background: white;
-    color: #14943f;
+    background: #ffffff;
+        color: #15803d;
     padding: 10px 22px;
     border-radius: 30px;
     border: none;
     font-weight: 700;
     cursor: pointer;
 }
-
+.login:hover {
+    background: #16a34a;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(22, 163, 74, .35);
+}
 .post {
-    background: #0e7d36;
-    color: white;
+    background: #ffffff;
+        color: #15803d;
     border: none;
     padding: 10px 22px;
     border-radius: 30px;
     font-weight: 700;
     cursor: pointer;
 }
-
+.post:hover {
+    background: #15803d;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(21, 128, 61, .35);
+}
 /* TITLE */
 
 .title {
@@ -173,7 +217,7 @@ body {
 
 .search-btn {
     width: 170px;
-    background: #19a94a;
+    background: #16a34a;
     color: white;
     border: none;
     font-size: 19px;
@@ -182,7 +226,7 @@ body {
 }
 
 .search-btn:hover {
-    background: #11863a;
+    background: #15803d;
 }
 
 
@@ -198,6 +242,16 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.page {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+
+    display: flex;
+    flex-direction: column;
+}
+
 .category-slider {
     position: relative;
     display: flex;
@@ -209,6 +263,7 @@ body {
     box-sizing: border-box;
     top: 50px;
     left: 25%;
+    border-radius: 22px;
 }
 
 .category-scroll {
@@ -318,4 +373,226 @@ body {
         width: 42px;
         height: 42px;
     }
+}
+
+.listing-section {
+    width: 100%;
+    padding: 60px 0;
+    background: #f5f5f5;
+}
+
+.listing-container {
+    width: calc(100% - 32px);
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 20px 24px;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.listing-tabs {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    height: 64px;
+    margin-bottom: 2px;
+}
+
+.listing-tab {
+    position: relative;
+    height: 64px;
+    padding: 0 10px;
+    color: #666666;
+    background: transparent;
+    border: 0;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.listing-tab.active {
+    color: #111111;
+}
+
+.listing-tab.active::after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+    left: 8px;
+    height: 3px;
+    background: #4ed97d;
+    border-radius: 3px;
+}
+
+.listing-tab sup {
+    color: #168eea;
+    font-size: 13px;
+}
+
+.listing-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    padding: 16px 20px 30px;
+    box-sizing: border-box;
+}
+
+.listing-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.listing-image-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #eeeeee;
+    border-radius: 11px;
+}
+
+.listing-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.listing-card:hover .listing-image {
+    transform: scale(1.04);
+}
+
+.listing-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #999999;
+    background: #eeeeee;
+    font-size: 13px;
+}
+
+.favorite-button {
+    position: absolute;
+    top: 10px;
+    right: 9px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.18);
+    border: 0;
+    border-radius: 50%;
+    font-size: 25px;
+    line-height: 30px;
+    cursor: pointer;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.listing-time {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 18px 8px 7px;
+    color: #ffffff;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.75),
+            rgba(0, 0, 0, 0));
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.listing-content {
+    padding: 9px 3px 5px;
+}
+
+.listing-title {
+    display: -webkit-box;
+    min-height: 44px;
+    overflow: hidden;
+    color: #111111;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 22px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.listing-title:hover {
+    color: #18a74a;
+}
+
+.listing-category {
+    margin-top: 5px;
+    overflow: hidden;
+    color: #999999;
+    font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.listing-price {
+    min-height: 44px;
+    margin-top: 5px;
+    color: #ff3158;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.listing-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    min-height: 49px;
+    margin-top: 8px;
+    color: #999999;
+    font-size: 13px;
+}
+
+.listing-location {
+    display: flex;
+    min-width: 0;
+    gap: 5px;
+    line-height: 20px;
+}
+
+.listing-location>div {
+    min-width: 0;
+}
+
+.listing-location div div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.listing-more {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 35px;
+    padding: 0;
+    color: #222222;
+    background: transparent;
+    border: 0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.listing-empty {
+    padding: 70px 20px;
+    color: #777777;
+    text-align: center;
+}
+
+.listing-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
