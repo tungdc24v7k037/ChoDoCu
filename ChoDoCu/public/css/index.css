@@ -16,7 +16,7 @@ body {
             #39c66f 35%,
             #46cf76 70%,
             #4ed97d 100%);
-    height: 215px;
+    height: 160px;
     position: relative;
     overflow: hidden;
 }
@@ -46,9 +46,8 @@ body {
 
 /* NAVBAR */
 .navbar {
-    max-width: 1600px;
     margin: auto;
-    padding: 16px 28px;
+    padding: 3px 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -62,10 +61,20 @@ body {
     gap: 30px;
 }
 
-.logo {
-    color: #fff;
-    font-size: 32px;
-    font-weight: 800;
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo a {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo img {
+    width: 200px;
+    object-fit: contain;
+    display: block;
 }
 
 .menu {
@@ -135,7 +144,7 @@ body {
 
 .login {
     background: #ffffff;
-        color: #15803d;
+    color: #15803d;
     padding: 10px 22px;
     border-radius: 30px;
     border: none;
@@ -166,10 +175,10 @@ body {
 /* TITLE */
 
 .title {
-    margin-top: 20px;
+   top:-50%;
     text-align: center;
     color: white;
-    font-size: 50px;
+    font-size: 30px;
     font-weight: 800;
     position: relative;
     z-index: 2;
@@ -179,7 +188,7 @@ body {
 
 .search-box {
     width: 980px;
-    top: 180px;
+    top: 110px;
     height: 72px;
     background: white;
     border-radius: 22px;
@@ -256,13 +265,13 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    width: 980px;
+    width: 1000px;
     padding: 10px 42px;
     background: #ffffff;
     border-bottom: 1px solid #eeeeee;
     box-sizing: border-box;
     top: 50px;
-    left: 25%;
+    left: 24%;
     border-radius: 22px;
 }
 
@@ -550,8 +559,6 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    min-height: 49px;
-    margin-top: 8px;
     color: #999999;
     font-size: 13px;
 }
