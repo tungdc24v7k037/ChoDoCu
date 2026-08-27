@@ -1,0 +1,369 @@
+.product-detail {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    gap: 40px;
+}
+
+.main-image {
+    height: 420px;
+    background: #222;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, .55);
+    color: white;
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+.prev {
+    left: 12px;
+}
+
+.next {
+    right: 12px;
+}
+
+.thumbnail-list {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    overflow-x: auto;
+}
+
+.thumbnail {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.thumbnail:hover {
+    border-color: #16a34a;
+}
+
+.product-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.product-heading h1 {
+    margin: 0 0 10px;
+    font-size: 27px;
+}
+
+.meta {
+    color: #666;
+}
+
+.save-btn {
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 22px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+
+.price {
+    margin: 12px 0 18px;
+    font-size: 27px;
+    font-weight: 700;
+    color: #f5223b;
+}
+
+.address,
+.updated {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.address small {
+    color: #999;
+}
+
+.market-price {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.price-line {
+    height: 4px;
+    background: #ddd;
+    margin: 20px 0 10px;
+    position: relative;
+}
+
+.price-line span {
+    display: block;
+    width: 65%;
+    height: 100%;
+    margin-left: 25%;
+    background: #2563eb;
+}
+
+.market-values {
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+}
+
+.action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.phone-btn,
+.chat-btn {
+    height: 46px;
+    border: 0;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.phone-btn {
+    background: #f2f2f2;
+}
+
+.chat-btn {
+    background: #ffd400;
+}
+
+.seller-card {
+    margin-top: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seller-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.seller-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.seller-status {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #16a34a;
+}
+
+.seller-page {
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+    background: #f5f5f5;
+    padding: 10px 16px;
+    border-radius: 20px;
+}
+
+.message-box {
+    display: flex;
+    margin-top: 16px;
+    background: #f6f6f6;
+    padding: 10px;
+    border-radius: 14px;
+}
+
+.message-box input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    outline: none;
+    padding: 10px;
+}
+
+.message-box button {
+    border: 0;
+    border-radius: 20px;
+    background: #ffd400;
+    padding: 0 22px;
+}
+
+.policy {
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+}
+
+.offer {
+    margin-top: 20px;
+}
+
+.offer-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+.offer-row input {
+    flex: 1;
+    height: 48px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 0 15px;
+}
+
+.offer-row button {
+    border: 0;
+    border-radius: 20px;
+    padding: 0 20px;
+    font-weight: 600;
+}
+
+.offer small {
+    display: block;
+    margin-top: 8px;
+    color: #999;
+}
+@media (max-width: 900px) {
+    .product-detail {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .main-image {
+        height: 350px;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-detail {
+        margin: 0;
+        border-radius: 0;
+        padding: 12px;
+    }
+
+    .product-heading h1 {
+        font-size: 22px;
+    }
+
+    .action-row {
+        grid-template-columns: 1fr;
+    }
+}
+.detail_product{
+    max-width: 1200px;
+        position: relative;
+        left: 18.5%;
+}
+.similar-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    max-width: 1200px;
+        position: relative;
+        left: 18.5%;
+}
+
+.similar-section h2 {
+    margin: 0 0 20px;
+    font-size: 20px;
+}
+
+.similar-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.similar-card {
+    min-width: 0;
+}
+
+.similar-card a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.similar-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.similar-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+
+    margin: 10px 8px 5px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.similar-category {
+    margin: 0 8px 6px;
+
+    font-size: 13px;
+    color: #999;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.similar-price {
+    margin: 0 8px;
+
+    font-size: 18px;
+    font-weight: 700;
+    color: #f5223b;
+}
+
+.similar-location {
+    margin: 18px 8px 0;
+
+    font-size: 13px;
+    color: #999;
+}

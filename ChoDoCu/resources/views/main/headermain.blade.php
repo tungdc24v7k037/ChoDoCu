@@ -9,9 +9,9 @@
                    </a>
                </div>
 
-               <div class="menu">
-                   <a href="#">Liên hệ</a>
-               </div>
+               <button class="login">
+                   Liên hệ
+               </button>
            </div>
 
            <div class="right">

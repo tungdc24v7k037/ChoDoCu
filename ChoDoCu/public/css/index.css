@@ -176,6 +176,8 @@ body {
 
 .title {
    top:-50%;
+    width: 500px;
+    left: 35%;
     text-align: center;
     color: white;
     font-size: 30px;

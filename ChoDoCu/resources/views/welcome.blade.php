@@ -77,7 +77,7 @@
 
                         <div class="listing-content">
 
-                            <a href="#" class="listing-title">
+                            <a href="{{ route('listings.show', $listing->slug) }}" class="listing-title">
                                 {{ $listing->title }}
                             </a>
 
