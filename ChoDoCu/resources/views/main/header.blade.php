@@ -223,17 +223,26 @@
         </button>
 
         @auth
-        <button class="profile">
-            <img src="/images/avatar.jpg" alt="Avatar">
-            <i class="fa-solid fa-chevron-down"></i>
-        </button>
-        @else
-        <button class="post-btn">
-            <a href="{{ route('login') }}" class="login-btn">
-                Đăng nhập
-            </a>
-        </button>
+        <div class="user-profile">
+            <div class="user-avatar">
+                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+            </div>
 
+            <span class="user-name">
+                <a href="{{ route('profile') }}">
+                    {{ Auth::user()->name }}
+                </a>
+            </span>
+
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+
+                <button type="submit" class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Đăng xuất
+                </button>
+            </form>
+        </div>
         @endauth
 
     </div>

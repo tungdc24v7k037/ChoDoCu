@@ -42,11 +42,13 @@
                 <p>Đăng nhập để tiếp tục trải nghiệm</p>
             </div>
 
-            <form class="login-form" id="loginForm" novalidate>
+            <form class="login-form" id="loginForm" action="{{ route('login.submit') }}" method="POST" novalidate>
+                @csrf
                 <div class="form-group">
                     <div class="input-container">
                         <div class="input-bg"></div>
-                        <input type="email" id="email" name="email" required autocomplete="email" placeholder=" ">
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                            autocomplete="email" placeholder=" ">
                         <label for="email">Tài khoản Email</label>
                         <div class="input-wave"></div>
                     </div>
@@ -83,7 +85,7 @@
 
                 <div class="form-options">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="remember" name="remember">
+                        <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label for="remember" class="checkbox-label">
                             <div class="gradient-checkbox">
                                 <div class="checkbox-bg"></div>

@@ -94,10 +94,17 @@
                     Hiện số {{ substr($listing->phone, 0, 5) }}****
                 </button>
 
+                @auth
                 <button class="chat-btn" onclick="window.location.href='{{ route('chat.index') }}'">
                     <i class="fa-regular fa-comment"></i>
                     Chat
                 </button>
+                @else
+                <button class="chat-btn" onclick="window.location.href='{{ route('login') }}'">
+                    <i class="fa-regular fa-comment"></i>
+                    Đăng nhập để Chat
+                </button>
+                @endauth
             </div>
 
             <div class="seller-card">
