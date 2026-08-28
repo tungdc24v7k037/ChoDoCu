@@ -9,7 +9,10 @@ class CategoryController extends Controller
 
 public function index()
 {
-    $categories = Category::where('is_active', true)->get();
+    $categories = Category::whereNull('parent_id')
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get();
 
     $listings = Listing::where('status', 'published')
         ->with(['primaryImage', 'category'])
@@ -18,7 +21,18 @@ public function index()
 
     return view('welcome', compact('categories', 'listings'));
 }
+public function children($id)
+{
+    $children = Category::where('parent_id', $id)
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get([
+            'id',
+            'name'
+        ]);
 
+    return response()->json($children);
+}
 public function show(string $slug)
 {
     $category = Category::where('slug', $slug)
@@ -26,19 +40,22 @@ public function show(string $slug)
         ->with('parent')
         ->firstOrFail();
 
+    // Danh mục con của danh mục hiện tại
     $subCategories = Category::where('parent_id', $category->id)
         ->where('is_active', true)
         ->orderBy('sort_order')
         ->get();
 
-    $categories = Category::where('is_active', true)
-        ->whereNull('parent_id')
+    // Chỉ lấy danh mục chính
+    $categories = Category::whereNull('parent_id')
+        ->where('is_active', true)
         ->orderBy('sort_order')
         ->get();
 
     if ($subCategories->isNotEmpty()) {
 
-     
+        // Nếu đang ở danh mục cha
+        // VD: Đồ điện tử
         $categoryIds = $subCategories->pluck('id');
 
         $listings = Listing::whereIn('category_id', $categoryIds)
@@ -49,7 +66,8 @@ public function show(string $slug)
 
     } else {
 
-      
+        // Nếu đang ở danh mục con
+        // VD: iPhone
         $listings = $category->listings()
             ->where('status', 'published')
             ->with('primaryImage')

@@ -8,43 +8,90 @@
                        <img src="{{ asset('img/logo.png') }}" alt="Chợ Đồ Cũ">
                    </a>
                </div>
+               @auth
+               @php
+               $unreadMessages = \App\Models\Message::where('is_read', 0)
+               ->where('sender_id', '!=', auth()->id())
+               ->whereHas('conversation', function ($query) {
+               $query->where('buyer_id', auth()->id())
+               ->orWhere('seller_id', auth()->id());
+               })
+               ->count();
+               @endphp
 
-               <button class="login" onclick="window.location.href='{{ route('chat.index') }}'">
+               <a href="{{ route('chat.index') }}" class="contact-btn">
+
+                   <i class="fa-regular fa-comment"></i>
+
+                   <span>Liên hệ</span>
+
+                   @if($unreadMessages > 0)
+                   <span class="message-badge">
+                       {{ $unreadMessages > 99 ? '99+' : $unreadMessages }}
+                   </span>
+                   @endif
+
+               </a>
+               @else
+
+               <a href="{{ route('login') }}" class="contact-btn">
+                   <i class="fa-regular fa-comment"></i>
+                   <span>Liên hệ</span>
+               </a>
+
+               @endauth
+               <!-- <button class="login" onclick="window.location.href='{{ route('chat.index') }}'">
                    Liên hệ
-               </button>
+               </button> -->
            </div>
 
            <div class="right">
+
                <div class="icon">♡</div>
                <div class="icon">🔔</div>
 
                @auth
                <div class="user-profile">
-                   <div class="user-avatar">
-                       {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                   </div>
 
-                   <span class="user-name">
-                       <a href="{{ route('profile') }}">
-                           {{ Auth::user()->name }}
-                       </a>
-                   </span>
+                   {{-- Avatar --}}
+                   <a href="{{ route('profile') }}" class="user-avatar">
+                       @if(Auth::user()->avatar)
+                       <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}">
+                       @else
+                       <span>
+                           {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                       </span>
+                       @endif
+                   </a>
 
+                   {{-- Tên user --}}
+                   <a href="{{ route('profile') }}" class="user-name">
+                       {{ Auth::user()->name }}
+                   </a>
+
+                   {{-- Đăng xuất --}}
                    <form action="{{ route('logout') }}" method="POST">
                        @csrf
 
                        <button type="submit" class="logout-btn">
                            <i class="fa-solid fa-right-from-bracket"></i>
-                           Đăng xuất
                        </button>
                    </form>
+
                </div>
+               @else
+
+               <button class="login" onclick="window.location='{{ route('login') }}'">
+                   Đăng nhập
+               </button>
+
                @endauth
+
                <button type="button" class="post" onclick="window.location.href='{{ route('createnews') }}'">
                    Đăng tin
                </button>
-           </div>
 
+           </div>
        </div>
 
        <div class="title">

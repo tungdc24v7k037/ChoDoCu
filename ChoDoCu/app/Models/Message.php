@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Conversation;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -13,14 +13,10 @@ class Message extends Model
         'is_read',
     ];
 
-    protected $casts = [
-        'is_read' => 'boolean',
-    ];
-
-    public function conversation()
-    {
-        return $this->belongsTo(Conversation::class);
-    }
+   public function conversation()
+{
+    return $this->belongsTo(Conversation::class);
+}
 
     public function sender()
     {

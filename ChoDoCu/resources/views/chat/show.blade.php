@@ -308,6 +308,92 @@
     }
     </style>
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+    const messages = document.getElementById('messages');
+
+    if (!messageForm) {
+        console.log('Không tìm thấy messageForm');
+        return;
+    }
+
+    messageForm.addEventListener('submit', async function(e) {
+
+        // QUAN TRỌNG: không cho form chuyển trang
+        e.preventDefault();
+
+        const text = messageInput.value.trim();
+
+        if (!text) {
+            return;
+        }
+
+        const csrfToken = messageForm.querySelector(
+            'input[name="_token"]'
+        ).value;
+
+        try {
+
+            const response = await fetch(messageForm.action, {
+                method: 'POST',
+
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    message: text
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                console.error(data);
+                return;
+            }
+
+            // Thêm tin vừa gửi vào giao diện
+            const messageRow = document.createElement('div');
+            messageRow.className = 'message-row mine';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const messageText = document.createElement('div');
+            messageText.textContent = data.message.text;
+
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = data.message.time;
+
+            bubble.appendChild(messageText);
+            bubble.appendChild(messageTime);
+
+            messageRow.appendChild(bubble);
+
+            if (messages) {
+                messages.appendChild(messageRow);
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            // Xóa nội dung input
+            messageInput.value = '';
+            messageInput.focus();
+
+        } catch (error) {
+            console.error('Lỗi gửi tin nhắn:', error);
+        }
+
+    });
+
+});
+</script>
 
 <body>
 
@@ -430,13 +516,13 @@
             {{-- MESSAGE LIST --}}
             <div class="messages" id="messages">
 
-                @forelse($conversation->messages as $message)
+                @foreach($conversation->messages as $message)
 
                 <div class="message-row
-                    {{ $message->sender_id === auth()->id()
-                        ? 'mine'
-                        : 'theirs' }}
-                ">
+            {{ $message->sender_id === auth()->id()
+                ? 'mine'
+                : 'theirs' }}
+        ">
 
                     <div class="bubble">
 
@@ -450,32 +536,18 @@
 
                 </div>
 
-                @empty
-
-                <div style="
-                    text-align:center;
-                    color:#999;
-                    margin-top:50px;
-                ">
-                    Hãy bắt đầu cuộc trò chuyện.
-                </div>
-
-                @endforelse
+                @endforeach
 
             </div>
 
-
-            {{-- SEND MESSAGE --}}
-            <form action="{{ route('chat.send', $conversation) }}" method="POST" class="message-form">
-
+            <form id="messageForm" action="{{ route('chat.send', $conversation) }}" method="POST" class="message-form">
                 @csrf
 
-                <textarea name="message" placeholder="Nhập tin nhắn..." required></textarea>
+                <textarea id="messageInput" name="message" placeholder="Nhập tin nhắn..." required></textarea>
 
                 <button type="submit">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
-
             </form>
 
         </main>
@@ -489,6 +561,75 @@
     if (messages) {
         messages.scrollTop = messages.scrollHeight;
     }
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+    const messages = document.getElementById('messages');
+
+    messageForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const text = messageInput.value.trim();
+
+        if (!text) return;
+
+        const token = messageForm.querySelector(
+            'input[name="_token"]'
+        ).value;
+
+        try {
+
+            const response = await fetch(messageForm.action, {
+                method: 'POST',
+
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    message: text
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                return;
+            }
+
+            const row = document.createElement('div');
+            row.className = 'message-row mine';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            bubble.innerHTML = `
+            ${escapeHtml(data.message.text)}
+            <div class="message-time">
+                ${data.message.time}
+            </div>
+        `;
+
+            row.appendChild(bubble);
+            messages.appendChild(row);
+
+            messageInput.value = '';
+
+            messages.scrollTop = messages.scrollHeight;
+
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    messages.scrollTop = messages.scrollHeight;
     </script>
 
 </body>

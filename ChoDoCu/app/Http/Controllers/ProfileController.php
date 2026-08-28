@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use App\Models\Listing;
 
 class ProfileController extends Controller
@@ -20,4 +20,20 @@ class ProfileController extends Controller
             'listings'
         ));
     }
+    public function edit()
+{
+    $user = auth()->user();
+
+    return view('profile.edit', compact('user'));
+}
+public function show(User $user)
+{
+    $listings = $user->listings()
+        ->where('status', 'published')
+        ->with('primaryImage')
+        ->latest()
+        ->get();
+
+    return view('profile.show', compact('user', 'listings'));
+}
 }

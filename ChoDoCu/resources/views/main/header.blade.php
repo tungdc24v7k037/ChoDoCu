@@ -117,7 +117,6 @@
 .contact-btn,
 .manage-btn {
     height: 44px;
-
     padding: 0 18px;
 
     border: 1px solid #e5e5e5;
@@ -127,6 +126,11 @@
 
     font-weight: 600;
     white-space: nowrap;
+}
+
+.contact-btn a {
+    text-decoration: none;
+    color: black;
 }
 
 .post-btn {
@@ -169,6 +173,170 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-trigger {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 5px 12px 5px 6px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #fff;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #16a34a;
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-name {
+    max-width: 110px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.profile-arrow {
+    font-size: 11px;
+    color: #777;
+    transition: .2s;
+}
+
+
+/* MENU XỔ XUỐNG */
+
+.profile-menu {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    right: 0;
+
+    width: 210px;
+
+    padding: 8px;
+
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+
+    display: none;
+
+    z-index: 9999;
+}
+
+.profile-menu.show {
+    display: block;
+}
+
+.profile-menu-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #222;
+    text-decoration: none;
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.profile-menu-item i {
+    width: 18px;
+    text-align: center;
+}
+
+.profile-menu-item:hover {
+    background: #f5f5f5;
+}
+
+.profile-menu-divider {
+    height: 1px;
+    margin: 6px 4px;
+    background: #eee;
+}
+
+.profile-menu form {
+    margin: 0;
+}
+
+.logout-item {
+    color: #e53935;
+}
+
+
+/* Khi mở menu */
+
+.profile-dropdown.open .profile-arrow {
+    transform: rotate(180deg);
+}
+
+.profile-avatar-header2 {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    background: #16a34a;
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-avatar-header2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-avatar-header2 span {
+    color: #fff;
+}
 </style>
 <header class="header">
 
@@ -208,43 +376,97 @@
         </button>
 
         <button class="contact-btn">
-            <i class="fa-regular fa-comment"></i>
-            Liên hệ
+            <a href="{{ route('chat.index') }}">
+                <i class="fa-regular fa-comment"></i>
+                Liên hệ
+            </a>
         </button>
 
-        <button class="manage-btn">
-            Quản lý tin
-        </button>
 
-        <button class="post-btn">
-            <a href="{{  route('createnews')  }}" class="login-btn">
-                Đăng tin
+        <button class="contact-btn">
+            <a href="{{ route('listings.manage') }}">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Quản lý tin
             </a>
         </button>
 
         @auth
-        <div class="user-profile">
-            <div class="user-avatar">
-                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+        <div class="profile-dropdown">
+
+            <button type="button" class="profile-trigger" id="profileTrigger">
+
+                <div class="profile-avatar-header2">
+                    @if(Auth::user()->avatar)
+                    <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}">
+                    @else
+                    <span>
+                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    </span>
+                    @endif
+                </div>
+
+                <span class="profile-name">
+                    {{ Auth::user()->name }}
+                </span>
+
+                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+
+                <a href="{{ route('profile') }}" class="profile-menu-item">
+                    <i class="fa-regular fa-user"></i>
+                    Hồ sơ cá nhân
+                </a>
+
+                <a href="{{ route('listings.manage') }}" class="profile-menu-item">
+                    <i class="fa-regular fa-rectangle-list"></i>
+                    Quản lý tin
+                </a>
+
+                <div class="profile-menu-divider"></div>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="profile-menu-item logout-item">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        Đăng xuất
+                    </button>
+                </form>
+
             </div>
 
-            <span class="user-name">
-                <a href="{{ route('profile') }}">
-                    {{ Auth::user()->name }}
-                </a>
-            </span>
-
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-
-                <button type="submit" class="logout-btn">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Đăng xuất
-                </button>
-            </form>
         </div>
         @endauth
 
     </div>
 
 </header>
+<script>
+const profileTrigger = document.getElementById('profileTrigger');
+const profileMenu = document.getElementById('profileMenu');
+
+if (profileTrigger && profileMenu) {
+
+    profileTrigger.addEventListener('click', function(event) {
+        event.stopPropagation();
+
+        profileMenu.classList.toggle('show');
+        this.closest('.profile-dropdown').classList.toggle('open');
+    });
+
+    document.addEventListener('click', function() {
+        profileMenu.classList.remove('show');
+
+        document
+            .querySelector('.profile-dropdown')
+            ?.classList.remove('open');
+    });
+
+    profileMenu.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+}
+</script>

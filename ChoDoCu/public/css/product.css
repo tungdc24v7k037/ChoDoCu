@@ -161,6 +161,7 @@
 }
 
 .chat-btn {
+    width: 334px;
     background: #ffd400;
 }
 
@@ -366,4 +367,123 @@
 
     font-size: 13px;
     color: #999;
+}
+.product-gallery {
+    width: 100%;
+}
+
+.gallery-main {
+    width: 100%;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+    background: #222;
+    border-radius: 14px;
+}
+
+.gallery-track {
+    height: 100%;
+    display: flex;
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
+
+.gallery-slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Nút trái phải */
+
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+
+    font-size: 23px;
+    cursor: pointer;
+
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+.gallery-arrow:hover {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.gallery-prev {
+    left: 12px;
+}
+
+.gallery-next {
+    right: 12px;
+}
+
+
+/* Thumbnail */
+
+.gallery-thumbnails {
+    display: flex;
+    gap: 10px;
+
+    margin-top: 12px;
+
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.gallery-thumb {
+    width: 72px;
+    height: 72px;
+
+    flex: 0 0 72px;
+
+    padding: 0;
+
+    border: 2px solid transparent;
+    border-radius: 8px;
+
+    overflow: hidden;
+    background: #fff;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-thumb.active {
+    border-color: #16a34a;
+}
+
+.gallery-thumb:hover {
+    opacity: 0.85;
 }

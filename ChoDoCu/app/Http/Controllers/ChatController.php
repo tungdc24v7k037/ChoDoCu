@@ -21,7 +21,7 @@ class ChatController extends Controller
                 'listing.primaryImage',
                 'buyer',
                 'seller',
-                'lastMessage'
+                'lastMessage',
             ])
             ->latest('updated_at')
             ->get();
@@ -34,8 +34,9 @@ class ChatController extends Controller
         $buyerId = auth()->id();
         $sellerId = $listing->user_id;
 
-        // Không cho tự chat với chính mình
-        abort_if($buyerId === $sellerId, 403);
+        if ($buyerId == $sellerId) {
+            return back();
+        }
 
         $conversation = Conversation::firstOrCreate([
             'listing_id' => $listing->id,
@@ -43,81 +44,86 @@ class ChatController extends Controller
             'seller_id' => $sellerId,
         ]);
 
-        return redirect()->route(
-            'chat.show',
-            $conversation
-        );
+        return redirect()->route('chat.show', $conversation->id);
     }
 
     public function show(Conversation $conversation)
-    {
-        $userId = auth()->id();
+{
+    $userId = auth()->id();
 
-        abort_unless(
-            $conversation->buyer_id === $userId ||
-            $conversation->seller_id === $userId,
-            403
-        );
+    if (
+        $conversation->buyer_id != $userId &&
+        $conversation->seller_id != $userId
+    ) {
+        abort(403);
+    }
 
-        $conversation->load([
+    // Đánh dấu tin nhắn của người kia là đã đọc
+    Message::where('conversation_id', $conversation->id)
+        ->where('sender_id', '!=', $userId)
+        ->where('is_read', 0)
+        ->update([
+            'is_read' => 1,
+        ]);
+
+    // Load conversation hiện tại
+    $conversation->load([
+        'listing.primaryImage',
+        'buyer',
+        'seller',
+        'messages.sender',
+    ]);
+
+    // Danh sách conversation bên trái
+    $conversations = Conversation::where(function ($query) use ($userId) {
+            $query->where('buyer_id', $userId)
+                ->orWhere('seller_id', $userId);
+        })
+        ->with([
             'listing.primaryImage',
             'buyer',
             'seller',
-            'messages.sender'
-        ]);
+            'lastMessage',
+        ])
+        ->latest('updated_at')
+        ->get();
 
-        Message::where('conversation_id', $conversation->id)
-            ->where('sender_id', '!=', $userId)
-            ->update([
-                'is_read' => true
-            ]);
+    return view('chat.show', compact(
+        'conversation',
+        'conversations'
+    ));
+}
 
-        $conversations = Conversation::where(function ($query) use ($userId) {
-                $query->where('buyer_id', $userId)
-                    ->orWhere('seller_id', $userId);
-            })
-            ->with([
-                'listing.primaryImage',
-                'buyer',
-                'seller',
-                'lastMessage'
-            ])
-            ->latest('updated_at')
-            ->get();
-
-        return view('chat.show', compact(
-            'conversation',
-            'conversations'
-        ));
-    }
-
-    public function send(
-        Request $request,
-        Conversation $conversation
-    ) {
+    public function send(Request $request, Conversation $conversation)
+    {
         $userId = auth()->id();
 
-        abort_unless(
-            $conversation->buyer_id === $userId ||
-            $conversation->seller_id === $userId,
-            403
-        );
+        if (
+            $conversation->buyer_id != $userId &&
+            $conversation->seller_id != $userId
+        ) {
+            abort(403);
+        }
 
         $request->validate([
             'message' => 'required|string|max:2000',
         ]);
 
-        Message::create([
+        $message = Message::create([
             'conversation_id' => $conversation->id,
             'sender_id' => $userId,
             'message' => $request->message,
+            'is_read' => 0,
         ]);
 
         $conversation->touch();
 
-        return redirect()->route(
-            'chat.show',
-            $conversation
-        );
+        return response()->json([
+            'success' => true,
+            'message' => [
+                'text' => $message->message,
+                'time' => $message->created_at->format('H:i'),
+            ],
+        ]);
     }
 }

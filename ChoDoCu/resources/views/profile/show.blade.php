@@ -46,6 +46,9 @@
         }
 
         body {
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
             margin: 0;
             background: #f3f3f3;
             font-family: Arial, sans-serif;
@@ -94,8 +97,8 @@
         }
 
         .profile-avatar {
-            width: 105px;
-            height: 105px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid #fff;
@@ -168,6 +171,137 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
+        }
+
+        .profile-avatar-info {
+            position: absolute;
+            left: 0;
+            top: 63%;
+
+            width: 100px;
+            height: 100px;
+
+            border-radius: 50%;
+            background: #16a34a;
+        }
+
+        .profile-avatar-info img {
+            width: 100%;
+            height: 100%;
+            display: block;
+
+            object-fit: cover;
+            border-radius: 50%;
+
+            border: 3px solid #fff;
+        }
+
+        .profile-avatar-info>span {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            color: white;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .avatar-camera {
+            position: absolute;
+            right: 0;
+            bottom: 2px;
+
+            width: 30px;
+            height: 30px;
+
+            border: 2px solid white;
+            border-radius: 50%;
+
+            background: white;
+            cursor: pointer;
+
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+        }
+
+        .profile-info h1 {
+            margin-top: 0;
+        }
+
+        .avatar-label {
+            width: 100%;
+            height: 100%;
+
+            position: relative;
+            display: block;
+
+            border-radius: 50%;
+            overflow: hidden;
+
+            cursor: pointer;
+        }
+
+        .avatar-image,
+        .avatar-fallback {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .avatar-image {
+            display: block;
+            object-fit: cover;
+        }
+
+        .avatar-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #16a34a;
+            color: #fff;
+
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+
+            border-radius: 50%;
+
+            background: rgba(0, 0, 0, 0.45);
+            color: #fff;
+
+            opacity: 0;
+            transition: 0.2s ease;
+        }
+
+        .avatar-overlay i {
+            font-size: 22px;
+        }
+
+        .avatar-overlay span {
+            font-size: 11px;
+        }
+
+        .avatar-label:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .avatar-label:hover .avatar-image {
+            filter: brightness(0.65);
         }
 
         /* SECTIONS */
@@ -335,13 +469,48 @@
                     <div class="profile-main">
 
                         <div class="avatar-wrap">
+                            @if(auth()->check() && auth()->id() === $user->id)
 
-                            <img src="{{ asset('img/avatar-default.png') }}" alt="{{ $user->name }}"
-                                class="profile-avatar">
+                            {{-- Chính chủ: cho phép đổi avatar --}}
+                            <div class="profile-avatar-info">
 
-                            <button class="avatar-edit">
-                                <i class="fa-solid fa-camera"></i>
-                            </button>
+                                <label for="avatarInput" class="avatar-label">
+
+                                    @if($user->avatar)
+                                    <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="avatar-image">
+                                    @else
+                                    <span class="avatar-fallback">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    </span>
+                                    @endif
+
+                                    <div class="avatar-overlay">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span>Đổi ảnh</span>
+                                    </div>
+
+                                </label>
+
+                                <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
+
+                            </div>
+
+                            @else
+
+                            {{-- Người khác xem: chỉ hiện avatar --}}
+                            <div class="profile-avatar-info">
+
+                                @if($user->avatar)
+                                <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="avatar-image">
+                                @else
+                                <span class="avatar-fallback">
+                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                </span>
+                                @endif
+
+                            </div>
+
+                            @endif
 
                         </div>
 
@@ -372,10 +541,12 @@
 
                             <div class="profile-actions">
 
-                                <a href="#">
+                                @if(auth()->check() && auth()->id() === $user->id)
+                                <a href="{{ route('profile.edit') }}">
                                     <i class="fa-solid fa-gear"></i>
                                     Chỉnh sửa trang
                                 </a>
+                                @endif
 
                                 <button type="button">
                                     <i class="fa-solid fa-share"></i>
@@ -517,5 +688,36 @@
 
     </html>
 </body>
+<script>
+const avatarInput = document.getElementById('avatarInput');
+
+avatarInput?.addEventListener('change', function() {
+    const file = this.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        let image = document.querySelector('.avatar-image');
+        const fallback = document.querySelector('.avatar-fallback');
+
+        if (!image) {
+            image = document.createElement('img');
+            image.className = 'avatar-image';
+
+            document
+                .querySelector('.avatar-label')
+                .prepend(image);
+
+            fallback?.remove();
+        }
+
+        image.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
 
 </html>

@@ -1,146 +1,313 @@
-  <link rel="stylesheet" href="{{ asset('css/news.css') }}">
-  <div class="header">
-      @include('main.header')
-  </div>
-  <div class="post-page">
-      <div class="post-layout">
+<link rel="stylesheet" href="{{ asset('css/news.css') }}">
 
-          <!-- Cột trái -->
-          <aside class="video-tip">
-              <h3>Đừng quên đăng video!</h3>
+<div class="header">
+    @include('main.header')
+</div>
 
-              <p>
-                  <span>✓</span>
-                  Tăng đến <strong>x2 lượt xem</strong> tin đăng 🔥
-              </p>
+<div class="post-page">
+    <div class="post-layout">
 
-              <p>
-                  <span>✓</span>
-                  Xuất hiện miễn phí ở Green Mart Video
-              </p>
-          </aside>
+        <!-- Cột trái -->
+        <aside class="video-tip">
+            <h3>Đừng quên đăng video!</h3>
 
-          <!-- Nội dung chính -->
-          <main class="post-content">
+            <p>
+                <span>✓</span>
+                Tăng đến <strong>x2 lượt xem</strong> tin đăng 🔥
+            </p>
 
-              <form action="#" method="POST" enctype="multipart/form-data">
+            <p>
+                <span>✓</span>
+                Xuất hiện miễn phí ở Green Mart Video
+            </p>
+        </aside>
 
-                  <!-- Khối ảnh/video -->
-                  <section class="form-card">
-                      <div class="form-label-row">
-                          <label>
-                              Hình ảnh/Video
-                              <small>(Tối đa 20 ảnh và 1 video)</small>
-                              <span>*</span>
-                          </label>
+        <!-- Nội dung chính -->
+        <main class="post-content">
 
-                          <span class="info-icon">i</span>
-                      </div>
+            <form id="createListingForm" action="{{ route('listings.store') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
 
-                      <label class="upload-box" for="mediaInput">
-                          <input type="file" id="mediaInput" name="media[]" accept="image/*,video/*" multiple hidden>
+                <!-- Khối ảnh -->
+                <section class="form-card">
+                    <div class="form-label-row">
+                        <label>
+                            Hình ảnh
+                            <small>(Tối đa 6 ảnh)</small>
+                            <span>*</span>
+                        </label>
 
-                          <div class="upload-icon">
-                              <svg viewBox="0 0 24 24" fill="none">
-                                  <path
-                                      d="M4 6.5C4 5.67 4.67 5 5.5 5H12L14 7H18.5C19.33 7 20 7.67 20 8.5V17.5C20 18.33 19.33 19 18.5 19H5.5C4.67 19 4 18.33 4 17.5V6.5Z"
-                                      stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <span class="info-icon">i</span>
+                    </div>
 
-                                  <circle cx="12" cy="13" r="3" stroke="currentColor" stroke-width="1.8" />
+                    <label class="upload-box" for="mediaInput">
+                        <input type="file" id="mediaInput" name="images[]" accept="image/*" multiple hidden>
 
-                                  <path d="M12 10V16M9 13H15" stroke="currentColor" stroke-width="1.8"
-                                      stroke-linecap="round" />
-                              </svg>
-                          </div>
+                        <div class="upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M4 6.5C4 5.67 4.67 5 5.5 5H12L14 7H18.5C19.33 7 20 7.67 20 8.5V17.5C20 18.33 19.33 19 18.5 19H5.5C4.67 19 4 18.33 4 17.5V6.5Z"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
 
-                          <strong>Thêm ảnh/video</strong>
-                      </label>
+                                <circle cx="12" cy="13" r="3" stroke="currentColor" stroke-width="1.8" />
 
-                      <div class="upload-error">
-                          Vui lòng chọn ít nhất 1 ảnh
-                      </div>
+                                <path d="M12 10V16M9 13H15" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
 
-                      <!-- Xem trước ảnh -->
-                      <div id="previewList" class="preview-list"></div>
+                        <strong>Thêm ảnh</strong>
+                    </label>
 
-                      <!-- Mô tả -->
-                      <div class="description-box">
-                          <label for="description">
-                              Mô tả tin đăng <span>*</span>
-                          </label>
+                    <div id="uploadError" class="upload-error"
+                        style="{{ $errors->has('images') || $errors->has('images.*') ? '' : 'display:none;' }}">
+                        @if($errors->has('images'))
+                        {{ $errors->first('images') }}
+                        @elseif($errors->has('images.*'))
+                        {{ $errors->first('images.*') }}
+                        @else
+                        Vui lòng chọn ít nhất 1 ảnh
+                        @endif
+                    </div>
 
-                          <textarea id="description" name="description" maxlength="1500"
-                              placeholder="Nhập mô tả chi tiết sản phẩm..."></textarea>
+                    <!-- Xem trước ảnh -->
+                    <div id="previewList" class="preview-list"></div>
 
-                          <button type="button" class="ai-button">
-                              ✦ AI Viết giúp
-                          </button>
-                      </div>
+                    <!-- Mô tả -->
+                    <div class="description-box">
+                        <label for="description">
+                            Mô tả tin đăng <span>*</span>
+                        </label>
 
-                      <div class="character-count">
-                          <span id="characterCurrent">0</span>/1500 kí tự
-                      </div>
+                        <textarea id="description" name="description" maxlength="1500" required
+                            placeholder="Nhập mô tả chi tiết sản phẩm...">{{ old('description') }}</textarea>
 
-                      <div class="description-guide">
-                          <strong>Mô tả tốt nên có:</strong>
+                        @error('description')
+                        <div class="field-error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
 
-                          <ul>
-                              <li>Tên sản phẩm, thương hiệu và năm sản xuất</li>
-                              <li>Tình trạng, thời gian sử dụng và giá bán</li>
-                          </ul>
-                      </div>
-                      <div class="category-field">
-                          <label for="category_id">
-                              Danh mục sản phẩm <span>*</span>
-                          </label>
+                    <div class="character-count">
+                        <span id="characterCurrent">{{ mb_strlen(old('description', '')) }}</span>/1500 kí tự
+                    </div>
 
-                          <select id="category_id" name="category_id" required>
-                              <option value="">-- Chọn danh mục --</option>
+                    <div class="description-guide">
+                        <strong>Mô tả tốt nên có:</strong>
 
-                              @foreach ($categories as $category)
-                              <option value="{{ $category->id }}"
-                                  {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                  {{ $category->name }}
-                              </option>
-                              @endforeach
-                          </select>
+                        <ul>
+                            <li>Tên sản phẩm, thương hiệu và năm sản xuất</li>
+                            <li>Tình trạng, thời gian sử dụng và giá bán</li>
+                        </ul>
+                    </div>
 
-                          @error('category_id')
-                          <div class="field-error">
-                              {{ $message }}
-                          </div>
-                          @enderror
-                      </div>
-                  </section>
+                    <!-- Danh mục -->
+                    <div class="category-field">
 
-                  <!-- Thông tin chi tiết -->
-                  <section class="detail-card">
-                      <div class="detail-icon">☷</div>
+                        <label for="parent_category_id">
+                            Danh mục sản phẩm <span>*</span>
+                        </label>
 
-                      <div>
-                          <h3>Thông tin chi tiết</h3>
-                          <p>Vui lòng chọn ảnh và điền mô tả trước</p>
-                      </div>
-                  </section>
+                        {{-- Danh mục cha --}}
+                        <select id="parent_category_id" required>
+                            <option value="">-- Chọn danh mục --</option>
 
-              </form>
-          </main>
-      </div>
+                            @foreach($categories as $category)
+                            <option value="{{ $category->id }}">
+                                {{ $category->name }}
+                            </option>
+                            @endforeach
+                        </select>
 
-      <!-- Thanh nút dưới -->
-      <div class="bottom-action">
-          <button type="submit" class="submit-button">
-              Đăng tin
-          </button>
-      </div>
-  </div>
 
-  <script>
+                        {{-- Danh mục con --}}
+                        <div id="subCategoryWrapper" style="display:none; margin-top:12px;">
+
+                            <label for="category_id">
+                                Danh mục chi tiết <span>*</span>
+                            </label>
+
+                            <select id="category_id" name="category_id">
+
+                                <option value="">
+                                    -- Chọn danh mục chi tiết --
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        @error('category_id')
+                        <div class="field-error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
+                    </div>
+                </section>
+
+                <!-- Thông tin chi tiết -->
+                <section class="detail-card">
+                    <div class="detail-icon">☷</div>
+
+                    <div class="detail-section">
+                        <h3>Thông tin chi tiết</h3>
+
+                        <div class="detail-fields">
+
+                            {{-- Tên sản phẩm --}}
+                            <div class="detail-field">
+                                <label for="title">
+                                    Tên sản phẩm <span>*</span>
+                                </label>
+
+                                <input type="text" id="title" name="title" value="{{ old('title') }}"
+                                    placeholder="Nhập tên sản phẩm" required>
+
+                                @error('title')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Tỉnh / Thành phố --}}
+                            <div class="detail-field">
+                                <label for="province">
+                                    Tỉnh / Thành phố
+                                </label>
+
+                                <input type="text" id="province" name="province" value="{{ old('province') }}"
+                                    placeholder="Nhập tỉnh / thành phố">
+
+                                @error('province')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Tình trạng --}}
+                            <div class="detail-field">
+                                <label for="condition">
+                                    Tình trạng <span>*</span>
+                                </label>
+
+                                <select id="condition" name="condition" required>
+                                    <option value="">Chọn tình trạng</option>
+
+                                    <option value="new" {{ old('condition') === 'new' ? 'selected' : '' }}>
+                                        Mới
+                                    </option>
+
+                                    <option value="used" {{ old('condition') === 'used' ? 'selected' : '' }}>
+                                        Đã sử dụng
+                                    </option>
+                                </select>
+
+                                @error('condition')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Giá bán --}}
+                            <div class="detail-field">
+                                <label for="price">
+                                    Giá bán <span>*</span>
+                                </label>
+
+                                <input type="number" id="price" name="price" value="{{ old('price') }}" min="0"
+                                    placeholder="Nhập giá bán" required>
+
+                                @error('price')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Số điện thoại --}}
+                            <div class="detail-field">
+                                <label for="phone">
+                                    Số điện thoại
+                                </label>
+
+                                <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
+                                    placeholder="Nhập số điện thoại">
+
+                                @error('phone')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Quận / Huyện --}}
+                            <div class="detail-field">
+                                <label for="district">
+                                    Quận / Huyện
+                                </label>
+
+                                <input type="text" id="district" name="district" value="{{ old('district') }}"
+                                    placeholder="Nhập quận / huyện">
+
+                                @error('district')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Phường / Xã --}}
+                            <div class="detail-field">
+                                <label for="ward">
+                                    Phường / Xã
+                                </label>
+
+                                <input type="text" id="ward" name="ward" value="{{ old('ward') }}"
+                                    placeholder="Nhập phường / xã">
+
+                                @error('ward')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            {{-- Địa chỉ chi tiết --}}
+                            <div class="detail-field">
+                                <label for="address">
+                                    Địa chỉ chi tiết
+                                </label>
+
+                                <input type="text" id="address" name="address" value="{{ old('address') }}"
+                                    placeholder="Số nhà, tên đường...">
+
+                                @error('address')
+                                <div class="field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <div class="bottom-action">
+                    <button type="submit" class="submit-button">
+                        Đăng tin
+                    </button>
+                </div>
+            </form>
+
+        </main>
+    </div>
+</div>
+
+<script>
 document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('createListingForm');
     const mediaInput = document.getElementById('mediaInput');
     const previewList = document.getElementById('previewList');
     const uploadBox = document.querySelector('.upload-box');
-    const uploadError = document.querySelector('.upload-error');
+    const uploadError = document.getElementById('uploadError');
 
     const description = document.getElementById('description');
     const characterCurrent = document.getElementById('characterCurrent');
@@ -156,8 +323,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (!mediaInput || !previewList || !uploadBox) {
-        console.error('Không tìm thấy mediaInput, previewList hoặc uploadBox.');
+    if (!mediaInput || !previewList || !uploadBox || !form) {
+        console.error('Không tìm thấy mediaInput, previewList, uploadBox hoặc form.');
         return;
     }
 
@@ -165,39 +332,44 @@ document.addEventListener('DOMContentLoaded', function() {
         const newFiles = Array.from(this.files);
 
         newFiles.forEach(function(file) {
-            const isImage = file.type.startsWith('image/');
-            const isVideo = file.type.startsWith('video/');
-
-            if (!isImage && !isVideo) {
+            if (!file.type.startsWith('image/')) {
                 return;
             }
 
-            // Chỉ cho tối đa 1 video
-            if (isVideo) {
-                const alreadyHasVideo = selectedFiles.some(function(item) {
-                    return item.type.startsWith('video/');
-                });
+            // Không thêm trùng đúng cùng file
+            const duplicate = selectedFiles.some(function(item) {
+                return (
+                    item.name === file.name &&
+                    item.size === file.size &&
+                    item.lastModified === file.lastModified
+                );
+            });
 
-                if (alreadyHasVideo) {
-                    alert('Chỉ được chọn tối đa 1 video.');
-                    return;
-                }
+            if (duplicate) {
+                return;
             }
 
-            // Tối đa 20 file
-            if (selectedFiles.length >= 20) {
-                alert('Chỉ được chọn tối đa 20 ảnh/video.');
+            if (selectedFiles.length >= 6) {
+                alert('Chỉ được chọn tối đa 6 ảnh.');
                 return;
             }
 
             selectedFiles.push(file);
         });
 
+        /*
+         * Quan trọng:
+         * Clear trước rồi sync lại bằng DataTransfer.
+         * Không clear mediaInput sau sync vì sẽ làm mất file khi submit.
+         */
+        this.value = '';
+
         syncInputFiles();
         renderPreview();
 
-        // Cho phép chọn lại cùng một file sau khi đã xóa
-        this.value = '';
+        if (selectedFiles.length > 0 && uploadError) {
+            uploadError.style.display = 'none';
+        }
     });
 
     function renderPreview() {
@@ -205,19 +377,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (selectedFiles.length === 0) {
             uploadBox.style.display = 'flex';
-
-            if (uploadError) {
-                uploadError.style.display = 'block';
-            }
-
             return;
         }
 
         uploadBox.style.display = 'none';
-
-        if (uploadError) {
-            uploadError.style.display = 'none';
-        }
 
         selectedFiles.forEach(function(file, index) {
             const previewItem = document.createElement('div');
@@ -225,48 +388,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const objectUrl = URL.createObjectURL(file);
 
-            if (file.type.startsWith('video/')) {
-                const video = document.createElement('video');
-                video.src = objectUrl;
-                video.controls = true;
-                video.muted = true;
-                video.preload = 'metadata';
+            const image = document.createElement('img');
+            image.src = objectUrl;
+            image.alt = file.name || 'Ảnh sản phẩm';
 
-                video.addEventListener('loadeddata', function() {
-                    URL.revokeObjectURL(objectUrl);
-                });
+            image.addEventListener('load', function() {
+                URL.revokeObjectURL(objectUrl);
+            });
 
-                previewItem.appendChild(video);
-            } else {
-                const image = document.createElement('img');
-                image.src = objectUrl;
-                image.alt = file.name || 'Ảnh sản phẩm';
-
-                image.addEventListener('load', function() {
-                    URL.revokeObjectURL(objectUrl);
-                });
-
-                previewItem.appendChild(image);
-            }
+            previewItem.appendChild(image);
 
             // Nút xóa
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.className = 'remove-media';
             removeButton.innerHTML = '&times;';
-            removeButton.setAttribute('aria-label', 'Xóa ảnh hoặc video');
+            removeButton.setAttribute('aria-label', 'Xóa ảnh');
 
             removeButton.addEventListener('click', function() {
                 selectedFiles.splice(index, 1);
 
                 syncInputFiles();
                 renderPreview();
+
+                if (selectedFiles.length === 0 && uploadError) {
+                    uploadError.style.display = 'block';
+                    uploadError.textContent = 'Vui lòng chọn ít nhất 1 ảnh';
+                }
             });
 
             previewItem.appendChild(removeButton);
 
             // Ảnh đầu tiên là ảnh bìa
-            if (index === 0 && file.type.startsWith('image/')) {
+            if (index === 0) {
                 const coverLabel = document.createElement('span');
                 coverLabel.className = 'cover-label';
                 coverLabel.textContent = 'Ảnh bìa';
@@ -277,8 +431,8 @@ document.addEventListener('DOMContentLoaded', function() {
             previewList.appendChild(previewItem);
         });
 
-        // Nút thêm ảnh nhỏ sau khi đã có ảnh
-        if (selectedFiles.length < 20) {
+        // Nút thêm ảnh nhỏ
+        if (selectedFiles.length < 6) {
             const addMoreLabel = document.createElement('label');
             addMoreLabel.className = 'add-more-media';
             addMoreLabel.setAttribute('for', 'mediaInput');
@@ -301,5 +455,135 @@ document.addEventListener('DOMContentLoaded', function() {
 
         mediaInput.files = dataTransfer.files;
     }
+
+    // Chặn submit nếu chưa có ảnh
+    form.addEventListener('submit', function(event) {
+        syncInputFiles();
+
+        if (selectedFiles.length === 0 || mediaInput.files.length === 0) {
+            event.preventDefault();
+
+            if (uploadError) {
+                uploadError.style.display = 'block';
+                uploadError.textContent = 'Vui lòng chọn ít nhất 1 ảnh';
+            }
+
+            uploadBox.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            return;
+        }
+
+        if (selectedFiles.length > 6) {
+            event.preventDefault();
+
+            if (uploadError) {
+                uploadError.style.display = 'block';
+                uploadError.textContent = 'Chỉ được chọn tối đa 6 ảnh';
+            }
+        }
+    });
 });
-  </script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const parentSelect =
+        document.getElementById('parent_category_id');
+
+    const childSelect =
+        document.getElementById('category_id');
+
+    const childWrapper =
+        document.getElementById('subCategoryWrapper');
+
+
+    parentSelect.addEventListener('change', async function() {
+
+        const parentId = this.value;
+
+        childSelect.innerHTML = `
+            <option value="">
+                -- Chọn danh mục chi tiết --
+            </option>
+        `;
+
+        childWrapper.style.display = 'none';
+
+
+        if (!parentId) {
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/categories/${parentId}/children`
+            );
+
+            const children = await response.json();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Nếu có danh mục con
+            |--------------------------------------------------------------------------
+            */
+
+            if (children.length > 0) {
+
+                children.forEach(function(category) {
+
+                    const option =
+                        document.createElement('option');
+
+                    option.value = category.id;
+                    option.textContent = category.name;
+
+                    childSelect.appendChild(option);
+                });
+
+                childSelect.required = true;
+                childWrapper.style.display = 'block';
+
+            } else {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Không có danh mục con
+                | Lưu luôn category cha
+                |--------------------------------------------------------------------------
+                */
+
+                const option =
+                    document.createElement('option');
+
+                option.value = parentId;
+                option.textContent =
+                    parentSelect.options[
+                        parentSelect.selectedIndex
+                    ].text;
+
+                childSelect.appendChild(option);
+
+                childSelect.value = parentId;
+
+                childSelect.required = false;
+                childWrapper.style.display = 'none';
+            }
+
+        } catch (error) {
+
+            console.error(
+                'Không tải được danh mục con:',
+                error
+            );
+
+        }
+
+    });
+
+});
+</script>

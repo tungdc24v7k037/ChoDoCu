@@ -18,19 +18,45 @@
     <div class="product-detail">
 
         <div class="product-gallery">
-            <div class="main-image">
-                <img src="{{ $listing->primaryImage->image_path ?? asset('img/no-image.png') }}"
-                    alt="{{ $listing->title }}">
 
-                <button class="nav prev">‹</button>
-                <button class="nav next">›</button>
+            <div class="gallery-main">
+
+                <div class="gallery-track" id="galleryTrack">
+                    @foreach($listing->images as $image)
+                    <div class="gallery-slide">
+                        <img src="{{ $image->image_path }}" alt="{{ $listing->title }}">
+                    </div>
+                    @endforeach
+                </div>
+
+                @if($listing->images->count() > 1)
+                <button type="button" class="gallery-arrow gallery-prev" id="galleryPrev">
+                    &#10094;
+                </button>
+
+                <button type="button" class="gallery-arrow gallery-next" id="galleryNext">
+                    &#10095;
+                </button>
+                @endif
+
             </div>
 
-            <div class="thumbnail-list">
-                @foreach($listing->images as $image)
-                <img src="{{ $image->image_path }}" alt="" class="thumbnail">
+
+            @if($listing->images->count() > 1)
+            <div class="gallery-thumbnails">
+
+                @foreach($listing->images as $index => $image)
+
+                <button type="button" class="gallery-thumb {{ $index === 0 ? 'active' : '' }}"
+                    data-index="{{ $index }}">
+                    <img src="{{ $image->image_path }}" alt="Ảnh {{ $index + 1 }}">
+                </button>
+
                 @endforeach
+
             </div>
+            @endif
+
         </div>
 
         <div class="product-info">
@@ -95,21 +121,37 @@
                 </button>
 
                 @auth
-                <button class="chat-btn" onclick="window.location.href='{{ route('chat.index') }}'">
-                    <i class="fa-regular fa-comment"></i>
-                    Chat
-                </button>
+                @if(auth()->id() != $listing->user_id)
+
+                <form action="{{ route('chat.start', $listing->id) }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="chat-btn">
+                        <i class="fa-regular fa-comment"></i>
+                        Chat
+                    </button>
+                </form>
+
+                @endif
                 @else
+
                 <button class="chat-btn" onclick="window.location.href='{{ route('login') }}'">
                     <i class="fa-regular fa-comment"></i>
                     Đăng nhập để Chat
                 </button>
+
                 @endauth
             </div>
 
             <div class="seller-card">
                 <div class="seller-left">
-                    <img src="{{ asset('img/avatar-default.png') }}" class="seller-avatar">
+                    @if($listing->user && $listing->user->avatar)
+                    <img src="{{ $listing->user->avatar }}" alt="{{ $listing->user->name }}" class="seller-avatar">
+                    @else
+                    <div class="seller-avatar seller-avatar-default">
+                        {{ strtoupper(substr($listing->user->name ?? 'N', 0, 1)) }}
+                    </div>
+                    @endif
 
                     <div>
                         <strong>{{ $listing->user->name ?? 'Người bán' }}</strong>
@@ -117,23 +159,20 @@
                     </div>
                 </div>
 
-                <a href="#" class="seller-page">
+                @if($listing->user)
+                <a href="{{ route('profile.show', $listing->user->id) }}" class="seller-page">
                     Xem trang
                 </a>
+                @endif
             </div>
 
-            <div class="message-box">
-                <input type="text" placeholder="Đăng nhập để gửi tin nhắn">
 
-                <button>Gửi</button>
-            </div>
-
-            <div class="policy">
+            <!-- <div class="policy">
                 <i class="fa-solid fa-circle-info"></i>
                 Chính sách của cửa hàng
-            </div>
+            </div> -->
 
-            <div class="offer">
+            <!-- <div class="offer">
                 <strong>Deal giá</strong>
 
                 <div class="offer-row">
@@ -146,7 +185,7 @@
                     Giá gốc:
                     {{ number_format($listing->price, 0, ',', '.') }} đ
                 </small>
-            </div>
+            </div> -->
 
         </div>
 
@@ -211,5 +250,101 @@
     </section>
     @include('main.footer')
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const track = document.getElementById('galleryTrack');
+
+    if (!track) {
+        return;
+    }
+
+    const slides = track.querySelectorAll('.gallery-slide');
+
+    const prevButton = document.getElementById('galleryPrev');
+    const nextButton = document.getElementById('galleryNext');
+
+    const thumbnails =
+        document.querySelectorAll('.gallery-thumb');
+
+    let currentIndex = 0;
+
+
+    function showSlide(index) {
+
+        if (index < 0) {
+            index = slides.length - 1;
+        }
+
+        if (index >= slides.length) {
+            index = 0;
+        }
+
+        currentIndex = index;
+
+        // Lướt ảnh
+        track.style.transform =
+            `translateX(-${currentIndex * 100}%)`;
+
+
+        // Active thumbnail
+        thumbnails.forEach(function(thumb) {
+            thumb.classList.remove('active');
+        });
+
+        if (thumbnails[currentIndex]) {
+
+            thumbnails[currentIndex]
+                .classList.add('active');
+
+            // thumbnail tự chạy theo
+            thumbnails[currentIndex]
+                .scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+        }
+    }
+
+
+    // Nút qua trái
+    if (prevButton) {
+
+        prevButton.addEventListener('click', function() {
+
+            showSlide(currentIndex - 1);
+
+        });
+    }
+
+
+    // Nút qua phải
+    if (nextButton) {
+
+        nextButton.addEventListener('click', function() {
+
+            showSlide(currentIndex + 1);
+
+        });
+    }
+
+
+    // Click thumbnail
+    thumbnails.forEach(function(thumb) {
+
+        thumb.addEventListener('click', function() {
+
+            const index =
+                parseInt(this.dataset.index);
+
+            showSlide(index);
+
+        });
+
+    });
+
+});
+</script>
 
 </html>

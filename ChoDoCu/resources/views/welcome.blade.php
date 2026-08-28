@@ -116,9 +116,55 @@
 
                 </div>
 
-                <div class="listing-pagination">
-                    {{ $listings->links() }}
+                @if($listings->hasPages())
+
+                <div class="manage-pagination">
+
+                    {{-- Previous --}}
+                    @if($listings->onFirstPage())
+
+                    <span class="page-btn disabled">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </span>
+
+                    @else
+
+                    <a href="{{ $listings->previousPageUrl() }}" class="page-btn">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+
+                    @endif
+
+
+                    {{-- Số trang --}}
+                    @for($page = 1; $page <= $listings->lastPage(); $page++)
+
+                        <a href="{{ $listings->url($page) }}" class="page-number
+                {{ $listings->currentPage() == $page ? 'active' : '' }}">
+                            {{ $page }}
+                        </a>
+
+                        @endfor
+
+
+                        {{-- Next --}}
+                        @if($listings->hasMorePages())
+
+                        <a href="{{ $listings->nextPageUrl() }}" class="page-btn">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+
+                        @else
+
+                        <span class="page-btn disabled">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+
+                        @endif
+
                 </div>
+
+                @endif
                 @else
                 <div class="listing-empty">
                     Chưa có sản phẩm nào trong danh mục này.

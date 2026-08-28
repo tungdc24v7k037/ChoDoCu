@@ -13,7 +13,8 @@ Route::get('/', function () {
 Route::get('/', [CategoryController::class, 'index'])->name('home');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])
     ->name('categories.show');
-
+Route::get('/categories/{id}/children', [CategoryController::class, 'children'])
+    ->name('categories.children');
 
 Route::get('/login', [AuthController::class, 'index'])
     ->name('login');
@@ -35,10 +36,21 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
-
+Route::get('/test-cloudinary', function () {
+    dd([
+        'url' => env('CLOUDINARY_URL'),
+        'disk' => config('filesystems.disks.cloudinary'),
+    ]);
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])
     ->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])
+    ->name('profile.show');
     Route::get('/chat', [ChatController::class, 'index'])
         ->name('chat.index');
 
@@ -53,4 +65,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/createnews', [NewsController::class, 'index'])
     ->name('createnews');
+    Route::post('/createnews', [NewsController::class, 'store'])
+        ->name('listings.store');
+    Route::get('/manage-listings', [ProductController::class, 'manage'])
+    ->name('listings.manage');
+    Route::get('/listings/{listing}/edit', [NewsController::class, 'edit'])
+        ->name('listings.edit');
+
+    Route::put('/listings/{listing}', [NewsController::class, 'update'])
+        ->name('listings.update');
+
 });
