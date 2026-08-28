@@ -126,4 +126,22 @@ class ChatController extends Controller
             ],
         ]);
     }
+    public function unreadCount()
+{
+    $userId = auth()->id();
+
+    $count = Message::where('is_read', 0)
+        ->where('sender_id', '!=', $userId)
+        ->whereHas('conversation', function ($query) use ($userId) {
+            $query->where(function ($q) use ($userId) {
+                $q->where('buyer_id', $userId)
+                  ->orWhere('seller_id', $userId);
+            });
+        })
+        ->count();
+
+    return response()->json([
+        'count' => $count
+    ]);
+}
 }

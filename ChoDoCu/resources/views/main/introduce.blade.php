@@ -42,11 +42,9 @@
     right: 0;
     bottom: 0;
     height: 55px;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0),
-        #ffffff
-    );
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            #ffffff);
     pointer-events: none;
 }
 
@@ -74,17 +72,17 @@
 </style>
 
 <section class="about-section">
-    <h2>Green Mart - Chợ Mua Bán Trực Tuyến Tiện Lợi Và Thân Thiện</h2>
+    <h2>Chợ Đồ Cũ - Chợ Mua Bán Trực Tuyến Tiện Lợi Và Thân Thiện</h2>
 
     <div id="aboutContent" class="about-content collapsed">
         <p>
-            Green Mart là nền tảng mua bán trực tuyến giúp kết nối người mua và người bán
+            Chợ Đồ Cũ là nền tảng mua bán trực tuyến giúp kết nối người mua và người bán
             một cách nhanh chóng, thuận tiện và minh bạch. Tại đây, người dùng có thể dễ dàng
             đăng tin, tìm kiếm sản phẩm và trao đổi trực tiếp với nhau trong nhiều lĩnh vực khác nhau.
         </p>
 
         <p>
-            Với giao diện đơn giản, dễ sử dụng, Green Mart hướng đến việc xây dựng một không gian
+            Với giao diện đơn giản, dễ sử dụng, Chợ Đồ Cũ hướng đến việc xây dựng một không gian
             mua bán hiện đại, phù hợp cho cả cá nhân lẫn cửa hàng nhỏ. Người dùng có thể tìm thấy
             nhiều sản phẩm đa dạng từ đồ điện tử, xe cộ, thời trang, đồ gia dụng, thú cưng,
             việc làm cho đến bất động sản.
@@ -116,7 +114,7 @@
         </p>
 
         <p>
-            Green Mart mong muốn mang đến trải nghiệm mua bán an toàn, dễ tiếp cận và tiết kiệm thời gian.
+            Chợ Đồ Cũ mong muốn mang đến trải nghiệm mua bán an toàn, dễ tiếp cận và tiết kiệm thời gian.
             Chỉ với vài thao tác đơn giản, bạn có thể đăng tin sản phẩm, tiếp cận người có nhu cầu
             và tìm kiếm những món đồ phù hợp với mức giá hợp lý.
         </p>
@@ -127,34 +125,29 @@
         </p>
     </div>
 
-    <button
-        type="button"
-        id="aboutToggle"
-        class="about-toggle"
-        aria-expanded="false"
-    >
+    <button type="button" id="aboutToggle" class="about-toggle" aria-expanded="false">
         Mở rộng
     </button>
 </section>
 <script>
-    const aboutContent = document.getElementById('aboutContent');
-    const aboutToggle = document.getElementById('aboutToggle');
+const aboutContent = document.getElementById('aboutContent');
+const aboutToggle = document.getElementById('aboutToggle');
 
-    aboutToggle.addEventListener('click', function () {
-        const isExpanded = aboutContent.classList.contains('expanded');
+aboutToggle.addEventListener('click', function() {
+    const isExpanded = aboutContent.classList.contains('expanded');
 
-        if (isExpanded) {
-            aboutContent.classList.remove('expanded');
-            aboutContent.classList.add('collapsed');
+    if (isExpanded) {
+        aboutContent.classList.remove('expanded');
+        aboutContent.classList.add('collapsed');
 
-            aboutToggle.textContent = 'Mở rộng';
-            aboutToggle.setAttribute('aria-expanded', 'false');
-        } else {
-            aboutContent.classList.remove('collapsed');
-            aboutContent.classList.add('expanded');
+        aboutToggle.textContent = 'Mở rộng';
+        aboutToggle.setAttribute('aria-expanded', 'false');
+    } else {
+        aboutContent.classList.remove('collapsed');
+        aboutContent.classList.add('expanded');
 
-            aboutToggle.textContent = 'Thu gọn';
-            aboutToggle.setAttribute('aria-expanded', 'true');
-        }
-    });
+        aboutToggle.textContent = 'Thu gọn';
+        aboutToggle.setAttribute('aria-expanded', 'true');
+    }
+});
 </script>

@@ -41,9 +41,7 @@
                     <button class="listing-tab active" type="button">
                         Dành cho bạn
                     </button>
-                    <button class="listing-tab" type="button">
-                        Mới nhất
-                    </button>
+
 
                 </div>
 

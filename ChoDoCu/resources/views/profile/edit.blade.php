@@ -233,6 +233,281 @@
         font-size: 12px;
     }
 
+    .profile-edit-form {
+        width: 100%;
+    }
+
+    .avatar-edit-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+
+        margin-bottom: 28px;
+    }
+
+    .edit-avatar {
+        position: relative;
+
+        width: 82px;
+        height: 82px;
+
+        flex: 0 0 82px;
+
+        border-radius: 50%;
+        overflow: hidden;
+
+        cursor: pointer;
+
+        border: 2px solid #eee;
+    }
+
+    .edit-avatar img,
+    .edit-avatar-fallback {
+        width: 100%;
+        height: 100%;
+    }
+
+    .edit-avatar img {
+        object-fit: cover;
+        display: block;
+    }
+
+    .edit-avatar-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #16a34a;
+        color: white;
+
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .edit-avatar-overlay {
+        position: absolute;
+        inset: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 4px;
+
+        background: rgba(0, 0, 0, .55);
+        color: #fff;
+
+        opacity: 0;
+
+        font-size: 12px;
+
+        transition: .2s ease;
+    }
+
+    .edit-avatar:hover .edit-avatar-overlay {
+        opacity: 1;
+    }
+
+    .edit-avatar-overlay i {
+        font-size: 18px;
+    }
+
+    .avatar-text {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .avatar-text strong {
+        font-size: 15px;
+    }
+
+    .avatar-text span {
+        color: #888;
+        font-size: 13px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+
+        margin-bottom: 7px;
+
+        color: #222;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .form-group label span {
+        color: #e53935;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 46px;
+
+        padding: 0 13px;
+
+        border: 1px solid #ddd;
+        border-radius: 9px;
+
+        background: #fff;
+
+        color: #222;
+
+        font-size: 14px;
+
+        outline: none;
+
+        transition:
+            border-color .2s ease,
+            box-shadow .2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #16a34a;
+
+        box-shadow:
+            0 0 0 3px rgba(22, 163, 74, .1);
+    }
+
+    .bio-input {
+        min-height: 110px;
+
+        padding: 12px 13px;
+
+        resize: vertical;
+
+        font-family: inherit;
+    }
+
+    .bio-bottom {
+        display: flex;
+        justify-content: space-between;
+
+        margin-top: 5px;
+    }
+
+    .form-note,
+    .bio-count {
+        color: #999;
+
+        font-size: 12px;
+    }
+
+    .security-section {
+        margin-top: 30px;
+        padding-top: 5px;
+    }
+
+    .security-title {
+        margin: 0 0 8px;
+
+        font-size: 20px;
+    }
+
+    .security-note {
+        margin-bottom: 20px;
+
+        color: #777;
+
+        font-size: 13px;
+    }
+
+    .security-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .security-input {
+        background: #f5f5f5;
+        color: #777;
+    }
+
+    .change-btn {
+        flex: 0 0 auto;
+
+        padding: 10px 14px;
+
+        border: none;
+        border-radius: 8px;
+
+        background: transparent;
+
+        color: #111;
+
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+    .change-btn:hover {
+        background: #f3f3f3;
+    }
+
+    .submit-area {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        gap: 10px;
+
+        margin-top: 24px;
+    }
+
+    .save-btn,
+    .cancel-btn {
+        height: 42px;
+
+        padding: 0 18px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        text-decoration: none;
+
+        cursor: pointer;
+    }
+
+    .save-btn {
+        border: none;
+
+        background: #16a34a;
+        color: #fff;
+    }
+
+    .save-btn:hover {
+        background: #12853d;
+    }
+
+    .cancel-btn {
+        border: 1px solid #ddd;
+
+        background: #fff;
+        color: #333;
+    }
+
+    .error {
+        margin-top: 5px;
+
+        color: #e53935;
+
+        font-size: 12px;
+    }
+
     .security-title {
         margin-top: 30px;
         margin-bottom: 8px;
@@ -471,6 +746,99 @@
         cursor: pointer;
         font-weight: 600;
     }
+
+    .password-form {
+        width: 100%;
+    }
+
+    .password-field {
+        margin-bottom: 14px;
+    }
+
+    .password-field input {
+        width: 100%;
+        height: 46px;
+
+        padding: 0 14px;
+
+        border: 1px solid #ddd;
+        border-radius: 9px;
+
+        outline: none;
+
+        font-size: 14px;
+    }
+
+    .password-field input:focus {
+        border-color: #16a34a;
+
+        box-shadow:
+            0 0 0 3px rgba(22, 163, 74, .08);
+    }
+
+    .password-rules {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px 30px;
+
+        margin: 10px 0 20px;
+
+        font-size: 13px;
+        color: #555;
+    }
+
+    .password-rules i {
+        margin-right: 5px;
+
+        font-size: 7px;
+    }
+
+    .password-rule-valid {
+        color: #16a34a !important;
+    }
+
+    .password-error {
+        margin-top: 5px;
+
+        color: #e53935;
+
+        font-size: 12px;
+    }
+
+    .password-success {
+        margin-bottom: 14px;
+
+        padding: 10px 12px;
+
+        background: #eaf8ef;
+        color: #16883c;
+
+        border-radius: 8px;
+
+        font-size: 13px;
+    }
+
+    .password-submit {
+        height: 42px;
+
+        padding: 0 20px;
+
+        border: 0;
+        border-radius: 22px;
+
+        background: #16a34a;
+        color: #fff;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        cursor: pointer;
+    }
+
+    .password-submit:hover {
+        background: #12853d;
+    }
     </style>
 </head>
 
@@ -504,57 +872,80 @@
             <div id="profilePanel" class="settings-panel active">
                 <h1>Hồ sơ cá nhân</h1>
 
-                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data"
+                    class="profile-edit-form">
                     @csrf
                     @method('PUT')
 
-                    {{-- Avatar --}}
+
+
                     <div class="avatar-edit-row">
 
                         <label for="avatar" class="edit-avatar">
 
                             @if($user->avatar)
+
                             <img src="{{ $user->avatar }}" alt="{{ $user->name }}" id="avatarPreview">
+
                             @else
+
                             <div class="edit-avatar-fallback" id="avatarFallback">
                                 {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
+
                             @endif
+
 
                             <div class="edit-avatar-overlay">
                                 <i class="fa-solid fa-camera"></i>
+                                <span>Đổi ảnh</span>
                             </div>
 
                         </label>
 
+
                         <input type="file" id="avatar" name="avatar" accept="image/*" hidden>
 
+
                         <div class="avatar-text">
-                            <strong>Ảnh đại diện</strong>
-                            <span>Nhấn vào ảnh để thay đổi</span>
+
+                            <strong>
+                                Ảnh đại diện
+                            </strong>
+
+                            <span>
+                                Nhấn vào ảnh để thay đổi
+                            </span>
+
+                            @error('avatar')
+                            <div class="error">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
                         </div>
 
                     </div>
 
 
-                    {{-- Name --}}
                     <div class="form-group">
 
                         <label for="name">
-                            Họ và tên
+                            Họ và tên <span>*</span>
                         </label>
 
                         <input type="text" id="name" name="name" class="form-control"
-                            value="{{ old('name', $user->name) }}" required>
+                            value="{{ old('name', $user->name) }}" placeholder="Nhập họ và tên" required>
 
                         @error('name')
-                        <div class="error">{{ $message }}</div>
+                        <div class="error">
+                            {{ $message }}
+                        </div>
                         @enderror
 
                     </div>
 
 
-                    {{-- Phone --}}
                     <div class="form-group">
 
                         <label for="phone">
@@ -564,10 +955,16 @@
                         <input type="text" id="phone" name="phone" class="form-control"
                             value="{{ old('phone', $user->phone ?? '') }}" placeholder="Thêm số điện thoại">
 
+                        @error('phone')
+                        <div class="error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
                     </div>
 
 
-                    {{-- Address --}}
+
                     <div class="form-group">
 
                         <label for="address">
@@ -577,70 +974,97 @@
                         <input type="text" id="address" name="address" class="form-control"
                             value="{{ old('address', $user->address ?? '') }}" placeholder="Nhập địa chỉ">
 
+                        @error('address')
+                        <div class="error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
                     </div>
 
 
-                    {{-- Bio --}}
+
                     <div class="form-group">
 
                         <label for="bio">
                             Giới thiệu về trang
                         </label>
 
-                        <textarea id="bio" name="bio" class="form-control" maxlength="300"
+                        <textarea id="bio" name="bio" class="form-control bio-input" maxlength="300"
                             placeholder="Giới thiệu ngắn về bạn...">{{ old('bio', $user->bio ?? '') }}</textarea>
 
-                        <div class="form-note">
-                            Tối đa 300 ký tự
+
+                        <div class="bio-bottom">
+
+                            <div class="form-note">
+                                Tối đa 300 ký tự
+                            </div>
+
+                            <div class="bio-count">
+                                <span id="bioCurrent">
+                                    {{ mb_strlen(old('bio', $user->bio ?? '')) }}
+                                </span>/300
+                            </div>
+
+                        </div>
+
+
+                        @error('bio')
+                        <div class="error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
+                    </div>
+
+
+
+                    <div class="security-section">
+
+                        <h2 class="security-title">
+                            Thông tin bảo mật
+                        </h2>
+
+                        <div class="security-note">
+                            Những thông tin dưới đây mang tính bảo mật.
+                        </div>
+
+
+                        {{-- EMAIL --}}
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <div class="security-row">
+
+                                <input type="email" class="form-control security-input" value="{{ $user->email }}"
+                                    disabled>
+
+                                <button type="button" class="change-btn">
+                                    Thay đổi
+                                </button>
+
+                            </div>
+
                         </div>
 
                     </div>
 
-
-                    {{-- Username --}}
-                    <div class="form-group">
-
-                        <label for="username">
-                            Tên gợi nhớ
-                        </label>
-
-                        <input type="text" id="username" name="username" class="form-control"
-                            value="{{ old('username', $user->username ?? '') }}" placeholder="Ví dụ: test-user">
-
-                    </div>
-
-
-                    <h2 class="security-title">
-                        Thông tin bảo mật
-                    </h2>
-
-                    <div class="security-note">
-                        Những thông tin dưới đây mang tính bảo mật.
-                    </div>
-
-
-                    {{-- Email --}}
-                    <div class="form-group">
-
-                        <label>Email</label>
-
-                        <div class="security-row">
-
-                            <input type="email" class="form-control" value="{{ $user->email }}" disabled>
-
-                            <button type="button" class="change-btn">
-                                Thay đổi
-                            </button>
-
-                        </div>
-
-                    </div>
 
 
                     <div class="submit-area">
+
+                        <a href="{{ route('profile.show', $user->id) }}" class="cancel-btn">
+                            Hủy
+                        </a>
+
                         <button type="submit" class="save-btn">
+                            <i class="fa-regular fa-floppy-disk"></i>
                             Lưu thay đổi
                         </button>
+
                     </div>
 
                 </form>
@@ -653,32 +1077,85 @@
                     Thay đổi mật khẩu
                 </h2>
 
-                <form action="" method="POST" class="password-form">
-
+                <form action="{{ route('profile.password.update') }}" method="POST" class="password-form">
                     @csrf
                     @method('PUT')
 
-                    <div class="account-input">
-                        <input type="password" name="current_password" placeholder="Mật khẩu hiện tại" required>
+
+                    {{-- Mật khẩu hiện tại --}}
+                    <div class="password-field">
+
+                        <input type="password" name="current_password" id="current_password"
+                            placeholder="Mật khẩu hiện tại" required>
+
+                        @error('current_password')
+                        <div class="password-error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
                     </div>
 
-                    <div class="account-input">
-                        <input type="password" name="password" id="newPassword" placeholder="Mật khẩu mới" required>
+
+                    {{-- Mật khẩu mới --}}
+                    <div class="password-field">
+
+                        <input type="password" name="password" id="password" placeholder="Mật khẩu mới" required>
+
+                        @error('password')
+                        <div class="password-error">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
                     </div>
 
+
+                    {{-- Điều kiện mật khẩu --}}
                     <div class="password-rules">
-                        <span>● Giới hạn từ 8-32 ký tự.</span>
-                        <span>● Tối thiểu 01 ký tự IN HOA.</span>
-                        <span>● Tối thiểu 01 ký tự in thường.</span>
-                        <span>● Tối thiểu 01 chữ số.</span>
+
+                        <div id="ruleLength">
+                            <i class="fa-solid fa-circle"></i>
+                            Giới hạn từ 8-32 ký tự.
+                        </div>
+
+                        <div id="ruleUpper">
+                            <i class="fa-solid fa-circle"></i>
+                            Tối thiểu 01 ký tự IN HOA.
+                        </div>
+
+                        <div id="ruleLower">
+                            <i class="fa-solid fa-circle"></i>
+                            Tối thiểu 01 ký tự in thường.
+                        </div>
+
+                        <div id="ruleNumber">
+                            <i class="fa-solid fa-circle"></i>
+                            Tối thiểu 01 chữ số.
+                        </div>
+
                     </div>
 
-                    <div class="account-input">
-                        <input type="password" name="password_confirmation" placeholder="Xác nhận mật khẩu mới"
-                            required>
+
+                    {{-- Xác nhận mật khẩu --}}
+                    <div class="password-field">
+
+                        <input type="password" name="password_confirmation" id="password_confirmation"
+                            placeholder="Xác nhận mật khẩu mới" required>
+
                     </div>
 
-                    <button type="submit" class="change-password-btn">
+
+                    @if(session('password_success'))
+
+                    <div class="password-success">
+                        {{ session('password_success') }}
+                    </div>
+
+                    @endif
+
+
+                    <button type="submit" class="password-submit">
                         Đổi mật khẩu
                     </button>
 
@@ -793,7 +1270,88 @@
 
     });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
 
+        const avatarInput =
+            document.getElementById('avatar');
+
+        const avatarPreview =
+            document.getElementById('avatarPreview');
+
+        const avatarFallback =
+            document.getElementById('avatarFallback');
+
+        const bio =
+            document.getElementById('bio');
+
+        const bioCurrent =
+            document.getElementById('bioCurrent');
+
+
+        // Preview avatar
+        avatarInput?.addEventListener('change', function() {
+
+            const file = this.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                alert('Vui lòng chọn file ảnh.');
+                this.value = '';
+                return;
+            }
+
+            const objectUrl =
+                URL.createObjectURL(file);
+
+
+            if (avatarPreview) {
+
+                avatarPreview.src = objectUrl;
+
+                avatarPreview.onload = function() {
+                    URL.revokeObjectURL(objectUrl);
+                };
+
+            } else if (avatarFallback) {
+
+                const img =
+                    document.createElement('img');
+
+                img.id = 'avatarPreview';
+                img.src = objectUrl;
+                img.alt = 'Avatar';
+
+                img.onload = function() {
+                    URL.revokeObjectURL(objectUrl);
+                };
+
+                avatarFallback.replaceWith(img);
+            }
+
+        });
+
+
+        // Đếm bio
+        if (bio && bioCurrent) {
+
+            bioCurrent.textContent =
+                bio.value.length;
+
+            bio.addEventListener('input', function() {
+
+                bioCurrent.textContent =
+                    this.value.length;
+
+            });
+
+        }
+
+    });
+    </script>
 </body>
 
 </html>

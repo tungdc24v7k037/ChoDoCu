@@ -452,6 +452,324 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .profile-product-image {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .profile-product-image img {
+            display: block;
+            width: 100%;
+            height: 215px;
+            object-fit: cover;
+        }
+
+        /* lớp tối */
+        .listing-status-overlay {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            z-index: 5;
+        }
+
+        /* chữ ĐÃ BÁN / ĐÃ ẨN */
+        .listing-status-overlay span {
+            padding: 9px 18px;
+
+            background: rgba(0, 0, 0, 0.72);
+            color: #fff;
+
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .profile-listing-tabs {
+            display: flex;
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .profile-tab {
+            padding: 8px 14px;
+
+            border: 0;
+            border-radius: 18px;
+
+            background: #f3f3f3;
+            color: #222;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .profile-tab.active {
+            background: #222;
+            color: #fff;
+        }
+
+
+        .profile-listing-group {
+            display: none;
+        }
+
+        .profile-listing-group.active {
+            display: block;
+        }
+
+        /* ===============================
+   TAB PROFILE
+================================ */
+
+        .profile-listing-tabs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin: 10px 0 20px;
+        }
+
+        .profile-tab {
+            padding: 8px 14px;
+
+            border: none;
+            border-radius: 20px;
+
+            background: #f3f3f3;
+            color: #222;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .profile-tab.active {
+            background: #222;
+            color: #fff;
+        }
+
+
+        /* ===============================
+   NHÓM SẢN PHẨM
+================================ */
+
+        .profile-listing-group {
+            display: none;
+        }
+
+        .profile-listing-group.active {
+            display: block;
+        }
+
+
+        /* ===============================
+   GRID SẢN PHẨM
+================================ */
+
+        .profile-products {
+            display: grid;
+
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+
+            width: 100%;
+        }
+
+
+        /* ===============================
+   CARD
+================================ */
+
+        .profile-product-card {
+            display: block;
+
+            min-width: 0;
+
+            color: #222;
+            text-decoration: none !important;
+
+            background: transparent;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .profile-product-card:hover {
+            text-decoration: none !important;
+        }
+
+
+        /* ===============================
+   ẢNH
+================================ */
+
+        .profile-product-image {
+            position: relative;
+
+            width: 100%;
+            height: 215px;
+
+            overflow: hidden;
+
+            background: #f2f2f2;
+
+            border-radius: 10px;
+        }
+
+        .profile-product-image img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            transition: transform .2s ease;
+        }
+
+        .profile-product-card:hover .profile-product-image img {
+            transform: scale(1.02);
+        }
+
+
+        /* ===============================
+   TITLE
+================================ */
+
+        .profile-product-title {
+            margin-top: 10px;
+
+            color: #222;
+
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.35;
+
+            text-decoration: none !important;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+
+            min-height: 40px;
+        }
+
+
+        /* ===============================
+   GIÁ
+================================ */
+
+        .profile-product-price {
+            margin-top: 6px;
+
+            color: #ff1f2d;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            text-decoration: none !important;
+        }
+
+
+        /* ===============================
+   OVERLAY ĐÃ BÁN / ĐÃ ẨN
+================================ */
+
+        .listing-status-overlay {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0, 0, 0, .55);
+
+            z-index: 5;
+        }
+
+        .listing-status-overlay span {
+            padding: 9px 18px;
+
+            background: rgba(0, 0, 0, .72);
+            color: #fff;
+
+            border: 2px solid rgba(255, 255, 255, .9);
+            border-radius: 6px;
+
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+
+        /* ===============================
+   EMPTY
+================================ */
+
+        .profile-empty {
+            grid-column: 1 / -1;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: #888;
+        }
+
+
+        /* ===============================
+   RESPONSIVE
+================================ */
+
+        @media (max-width: 1000px) {
+
+            .profile-products {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .profile-products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .profile-product-image {
+                height: 180px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .profile-products {
+                grid-template-columns: 1fr;
+            }
+
+        }
         </style>
     </head>
 
@@ -570,74 +888,154 @@
                 <h2 class="section-title">
                     Tất cả tin đăng ({{ $listings->count() }})
                 </h2>
+                <div class="profile-listing-tabs">
 
-                <div class="tabs">
-                    <button class="tab active">
+                    <button type="button" class="profile-tab active" data-status="published">
                         Tin đang hoạt động
-                        ({{ $listings->where('status', 'published')->count() }})
+                        ({{ $publishedListings->count() }})
                     </button>
 
-                    <button class="tab">
-                        Đã bán (0)
+                    <button type="button" class="profile-tab" data-status="sold">
+                        Đã bán
+                        ({{ $soldListings->count() }})
                     </button>
+
+                    @if(auth()->check() && auth()->id() === $user->id)
+                    <button type="button" class="profile-tab" data-status="hidden">
+                        Đã ẩn
+                        ({{ $hiddenListings->count() }})
+                    </button>
+                    @endif
+
                 </div>
+                <div class="profile-listing-group" data-group="sold">
 
+                    <div class="profile-products">
 
-                @if($listings->count())
+                        @forelse($soldListings as $listing)
 
-                <div class="listing-grid">
+                        <a href="{{ route('listings.show', $listing->slug) }}" class="profile-product-card">
 
-                    @foreach($listings as $listing)
+                            <div class="profile-product-image">
 
-                    <article class="listing-card">
+                                @if($listing->primaryImage)
+                                <img src="{{ $listing->primaryImage->image_path }}" alt="{{ $listing->title }}">
+                                @endif
 
-                        <a href="{{ route('listings.show', $listing->slug) }}">
+                                <div class="listing-status-overlay">
+                                    <span>ĐÃ BÁN</span>
+                                </div>
 
-                            @if($listing->primaryImage)
-                            <img src="{{ $listing->primaryImage->image_path }}" alt="{{ $listing->title }}"
-                                class="listing-image">
-                            @endif
+                            </div>
+
+                            <div class="profile-product-title">
+                                {{ $listing->title }}
+                            </div>
+
+                            <div class="profile-product-price">
+                                {{ number_format($listing->price, 0, ',', '.') }} đ
+                            </div>
 
                         </a>
 
-                        <div class="listing-title">
-                            {{ $listing->title }}
+                        @empty
+
+                        <div class="profile-empty">
+                            Chưa có tin đã bán
                         </div>
 
-                        <div class="listing-price">
-                            {{ number_format($listing->price, 0, ',', '.') }} đ
-                        </div>
+                        @endforelse
 
-                    </article>
-
-                    @endforeach
+                    </div>
 
                 </div>
+                @if(auth()->check() && auth()->id() === $user->id)
 
-                @else
+                <div class="profile-listing-group" data-group="hidden">
 
-                <div class="empty-state">
+                    <div class="profile-products">
 
-                    <div class="empty-icon">
-                        <i class="fa-regular fa-file-lines"></i>
+                        @forelse($hiddenListings as $listing)
+
+                        <div class="profile-product-card">
+
+                            <div class="profile-product-image">
+
+                                @if($listing->primaryImage)
+                                <img src="{{ $listing->primaryImage->image_path }}" alt="{{ $listing->title }}">
+                                @endif
+
+                                <div class="listing-status-overlay">
+                                    <span>ĐÃ ẨN</span>
+                                </div>
+
+                            </div>
+
+                            <div class="profile-product-title">
+                                {{ $listing->title }}
+                            </div>
+
+                            <div class="profile-product-price">
+                                {{ number_format($listing->price, 0, ',', '.') }} đ
+                            </div>
+
+                        </div>
+
+                        @empty
+
+                        <div class="profile-empty">
+                            Chưa có tin đã ẩn
+                        </div>
+
+                        @endforelse
+
                     </div>
-
-                    <div>
-                        Chưa có tin đăng
-                    </div>
-
-                    <a href="{{ route('createnews') }}" class="post-now">
-                        Đăng tin ngay
-                    </a>
 
                 </div>
 
                 @endif
+                <div class="profile-listing-group active" data-group="published">
+
+                    <div class="profile-products">
+
+                        @forelse($publishedListings as $listing)
+
+                        <a href="{{ route('listings.show', $listing->slug) }}" class="profile-product-card">
+
+                            <div class="profile-product-image">
+
+                                @if($listing->primaryImage)
+                                <img src="{{ $listing->primaryImage->image_path }}" alt="{{ $listing->title }}">
+                                @endif
+
+                            </div>
+
+                            <div class="profile-product-title">
+                                {{ $listing->title }}
+                            </div>
+
+                            <div class="profile-product-price">
+                                {{ number_format($listing->price, 0, ',', '.') }} đ
+                            </div>
+
+                        </a>
+
+                        @empty
+
+                        <div class="profile-empty">
+                            Chưa có tin đang hoạt động
+                        </div>
+
+                        @endforelse
+
+                    </div>
+
+                </div>
 
             </section>
 
 
-            {{-- ĐÁNH GIÁ --}}
+            <!-- {{-- ĐÁNH GIÁ --}}
             <section class="section-card">
 
                 <h2 class="section-title">
@@ -680,7 +1078,7 @@
 
                 </div>
 
-            </section>
+            </section> -->
 
         </div>
 
@@ -717,6 +1115,52 @@ avatarInput?.addEventListener('change', function() {
     };
 
     reader.readAsDataURL(file);
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const tabs =
+        document.querySelectorAll('.profile-tab');
+
+    const groups =
+        document.querySelectorAll('.profile-listing-group');
+
+
+    tabs.forEach(function(tab) {
+
+        tab.addEventListener('click', function() {
+
+            const status =
+                this.dataset.status;
+
+
+            tabs.forEach(function(item) {
+                item.classList.remove('active');
+            });
+
+
+            groups.forEach(function(group) {
+                group.classList.remove('active');
+            });
+
+
+            this.classList.add('active');
+
+
+            const target =
+                document.querySelector(
+                    `.profile-listing-group[data-group="${status}"]`
+                );
+
+            if (target) {
+                target.classList.add('active');
+            }
+
+        });
+
+    });
+
 });
 </script>
 

@@ -67,7 +67,8 @@
 
                     <p class="meta">
                         {{ $listing->category->name ?? '' }}
-                        • {{ $listing->condition ?? 'Đã qua sử dụng' }}
+                        •
+                        {{ $listing->condition === 'new' ? 'Đồ mới' : 'Đã qua sử dụng' }}
                     </p>
                 </div>
 
@@ -101,19 +102,7 @@
                 Cập nhật {{ $listing->updated_at->diffForHumans() }}
             </div>
 
-            <div class="market-price">
-                <strong>Khoảng giá thị trường</strong>
 
-                <div class="price-line">
-                    <span></span>
-                </div>
-
-                <div class="market-values">
-                    <span>12.38 tr</span>
-                    <span>15.13 tr</span>
-                    <span>17.5 tr</span>
-                </div>
-            </div>
 
             <div class="action-row">
                 <button class="phone-btn">
@@ -191,7 +180,13 @@
 
     </div>
     <div class="detail_product">
-        @include('main.introduce')
+
+        <h2>Mô tả chi tiết</h2>
+
+        <div class="product-description">
+            {!! nl2br(e($listing->description)) !!}
+        </div>
+
     </div>
     <section class="similar-section">
 

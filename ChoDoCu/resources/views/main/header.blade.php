@@ -351,12 +351,12 @@
 
     </button>
 
-    <form class="search-box">
+    <form class="search-box" action="{{ route('search') }}" method="GET">
 
         <div class="search-input">
             <i class="fa-solid fa-magnifying-glass"></i>
 
-            <input type="text" placeholder="Tìm sản phẩm">
+            <input type="text" placeholder="Tìm sản phẩm" name="q" value="{{ request('q') }}">
         </div>
 
         <button class="search-btn">

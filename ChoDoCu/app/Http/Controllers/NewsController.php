@@ -337,6 +337,10 @@ public function update(Request $request, Listing $listing)
             'integer',
             'exists:listing_images,id',
         ],
+        'status' => [
+    'required',
+    'in:published,hidden,sold',
+],
     ]);
 
 
@@ -360,7 +364,8 @@ public function update(Request $request, Listing $listing)
             'price' => $validated['price'],
 
             'phone' => $validated['phone'] ?? null,
-
+            
+            'status' => $validated['status'],
             // ĐỊA CHỈ
             'province' => $validated['province'] ?? null,
             'district' => $validated['district'] ?? null,

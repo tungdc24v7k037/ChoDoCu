@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\SearchController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,13 +24,17 @@ Route::get('/login', [AuthController::class, 'index'])
 
 
 
-
 Route::get('/listings/{slug}', [ProductController::class, 'show'])
     ->name('listings.show');
 
 Route::get('/login', [AuthController::class, 'index'])
     ->name('login');
 
+Route::get('/register', [AuthController::class, 'showRegister'])
+    ->name('register');
+
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('register.submit');
 Route::post('/login', [AuthController::class, 'login'])
     ->name('login.submit');
 
@@ -42,6 +47,10 @@ Route::get('/test-cloudinary', function () {
         'disk' => config('filesystems.disks.cloudinary'),
     ]);
 });
+
+
+Route::get('/search', [SearchController::class, 'index'])
+    ->name('search');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])
     ->name('profile');
@@ -51,12 +60,16 @@ Route::middleware('auth')->group(function () {
         ->name('profile.update');
     Route::get('/profile/{user}', [ProfileController::class, 'show'])
     ->name('profile.show');
+      Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password.update');
+
     Route::get('/chat', [ChatController::class, 'index'])
         ->name('chat.index');
 
     Route::post('/chat/start/{listing}', [ChatController::class, 'start'])
         ->name('chat.start');
-
+    Route::get('/chat/unread-count', [ChatController::class, 'unreadCount'])
+    ->name('chat.unreadCount');
     Route::get('/chat/{conversation}', [ChatController::class, 'show'])
         ->name('chat.show');
 

@@ -20,17 +20,10 @@
                @endphp
 
                <a href="{{ route('chat.index') }}" class="contact-btn">
-
                    <i class="fa-regular fa-comment"></i>
+                   Liên hệ
 
-                   <span>Liên hệ</span>
-
-                   @if($unreadMessages > 0)
-                   <span class="message-badge">
-                       {{ $unreadMessages > 99 ? '99+' : $unreadMessages }}
-                   </span>
-                   @endif
-
+                   <span id="messageBadge" class="message-badge" style="display:none;"></span>
                </a>
                @else
 
@@ -102,7 +95,9 @@
 
        <div class="search-input">
            🔍
-           <input type="text" placeholder="Tìm sản phẩm...">
+           <form action="{{ route('search') }}" method="GET" class="search-form">
+
+               <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm sản phẩm..." autocomplete="off">
        </div>
 
        <div class="location">
@@ -112,5 +107,53 @@
        <button class="search-btn">
            Tìm kiếm
        </button>
-
+       </form>
    </div>
+   @auth
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const badge = document.getElementById('messageBadge');
+
+    if (!badge) return;
+
+    async function refreshUnreadCount() {
+        try {
+            const response = await fetch(
+                "{{ route('chat.unreadCount') }}", {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    cache: 'no-store'
+                }
+            );
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+
+            const count = Number(data.count || 0);
+
+            if (count > 0) {
+                badge.textContent = count > 99 ? '99+' : count;
+                badge.style.display = 'flex';
+            } else {
+                badge.textContent = '';
+                badge.style.display = 'none';
+            }
+
+        } catch (error) {
+            console.error('Lỗi cập nhật tin nhắn:', error);
+        }
+    }
+
+    // chạy ngay
+    refreshUnreadCount();
+
+    // tự cập nhật mỗi 3 giây
+    setInterval(refreshUnreadCount, 3000);
+
+});
+   </script>
+   @endauth

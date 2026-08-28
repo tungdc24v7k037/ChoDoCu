@@ -351,7 +351,28 @@
 
                 @endif
 
+                <div class="detail-field">
+                    <label for="status">
+                        Trạng thái tin
+                    </label>
 
+                    <select id="status" name="status" class="form-control">
+
+                        <option value="published"
+                            {{ old('status', $listing->status) === 'published' ? 'selected' : '' }}>
+                            Hoạt động
+                        </option>
+
+                        <option value="hidden" {{ old('status', $listing->status) === 'hidden' ? 'selected' : '' }}>
+                            Ẩn tin
+                        </option>
+
+                        <option value="sold" {{ old('status', $listing->status) === 'sold' ? 'selected' : '' }}>
+                            Đã bán
+                        </option>
+
+                    </select>
+                </div>
                 {{-- BUTTON --}}
                 <div class="bottom-action">
 

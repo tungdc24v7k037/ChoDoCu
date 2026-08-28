@@ -360,6 +360,42 @@
         opacity: .4;
         cursor: default;
     }
+
+    .manage-status {
+        margin-top: 8px;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        padding: 5px 10px;
+
+        border-radius: 20px;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status-badge i {
+        font-size: 7px;
+    }
+
+    .status-active {
+        background: #eaf8ef;
+        color: #16a34a;
+    }
+
+    .status-hidden {
+        background: #f2f2f2;
+        color: #777;
+    }
+
+    .status-sold {
+        background: #fff3e5;
+        color: #f59e0b;
+    }
     </style>
 </head>
 
@@ -401,36 +437,15 @@
                 class="{{ $status === 'published' ? 'active' : '' }}">
                 ĐANG HIỂN THỊ ({{ $counts->published ?? 0 }})
             </a>
-
-            <a href="{{ route('listings.manage', ['status' => 'expired']) }}"
-                class="{{ $status === 'expired' ? 'active' : '' }}">
-                HẾT HẠN ({{ $counts->expired ?? 0 }})
-            </a>
-
-            <a href="{{ route('listings.manage', ['status' => 'rejected']) }}"
-                class="{{ $status === 'rejected' ? 'active' : '' }}">
-                BỊ TỪ CHỐI ({{ $counts->rejected ?? 0 }})
-            </a>
-
-            <a href="{{ route('listings.manage', ['status' => 'pending_payment']) }}"
-                class="{{ $status === 'pending_payment' ? 'active' : '' }}">
-                CẦN THANH TOÁN ({{ $counts->pending_payment ?? 0 }})
-            </a>
-
-            <a href="{{ route('listings.manage', ['status' => 'draft']) }}"
-                class="{{ $status === 'draft' ? 'active' : '' }}">
-                TIN NHÁP ({{ $counts->draft ?? 0 }})
-            </a>
-
-            <a href="{{ route('listings.manage', ['status' => 'pending']) }}"
-                class="{{ $status === 'pending' ? 'active' : '' }}">
-                CHỜ DUYỆT ({{ $counts->pending ?? 0 }})
-            </a>
-
             <a href="{{ route('listings.manage', ['status' => 'hidden']) }}"
                 class="{{ $status === 'hidden' ? 'active' : '' }}">
                 ĐÃ ẨN ({{ $counts->hidden ?? 0 }})
             </a>
+            <a href="{{ route('listings.manage', ['status' => 'sold']) }}"
+                class="{{ $status === 'sold' ? 'active' : '' }}">
+                ĐÃ BÁN ({{ $counts->sold ?? 0 }})
+            </a>
+
 
         </div>
 
@@ -455,7 +470,24 @@
                     <div class="manage-price">
                         {{ number_format($listing->price, 0, ',', '.') }} đ
                     </div>
-
+                    <div class="manage-status">
+                        @if($listing->status === 'published')
+                        <span class="status-badge status-active">
+                            <i class="fa-solid fa-circle"></i>
+                            Hoạt động
+                        </span>
+                        @elseif($listing->status === 'hidden')
+                        <span class="status-badge status-hidden">
+                            <i class="fa-solid fa-eye-slash"></i>
+                            Đã ẩn
+                        </span>
+                        @elseif($listing->status === 'sold')
+                        <span class="status-badge status-sold">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Đã bán
+                        </span>
+                        @endif
+                    </div>
                     <div class="manage-meta">
                         {{ $listing->district }}
                         @if($listing->province)

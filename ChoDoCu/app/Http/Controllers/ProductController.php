@@ -52,11 +52,7 @@ public function manage(Request $request)
 
     $allowedStatuses = [
         'published',
-        'expired',
-        'rejected',
-        'pending_payment',
-        'draft',
-        'pending',
+        'sold',
         'hidden',
     ];
 
@@ -73,11 +69,7 @@ public function manage(Request $request)
     $counts = Listing::where('user_id', $userId)
         ->selectRaw("
             SUM(status = 'published') as published,
-            SUM(status = 'expired') as expired,
-            SUM(status = 'rejected') as rejected,
-            SUM(status = 'pending_payment') as pending_payment,
-            SUM(status = 'draft') as draft,
-            SUM(status = 'pending') as pending,
+             SUM(status = 'sold') as sold,
             SUM(status = 'hidden') as hidden
         ")
         ->first();
