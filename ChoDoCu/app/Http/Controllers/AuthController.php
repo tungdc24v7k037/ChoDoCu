@@ -14,25 +14,40 @@ class AuthController extends Controller
     public function main(){
         return view('welcome');
     }
-     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+    
+public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
+    if (Auth::attempt(
+        $credentials,
+        $request->boolean('remember')
+    )) {
+        $request->session()->regenerate();
 
-            return redirect()->intended('/');
+        $user = Auth::user();
+
+        if (
+            $user->hasRole('admin') ||
+            $user->hasRole('super-admin') ||
+            $user->hasRole('moderator')
+        ) {
+            return redirect()->route('admin');
         }
 
-        return back()
-            ->withErrors([
-                'email' => 'Email hoặc mật khẩu không đúng.',
-            ])
-            ->onlyInput('email');
+        return redirect('/');
     }
+
+    return back()
+        ->withErrors([
+            'email' => 'Email hoặc mật khẩu không đúng.',
+        ])
+        ->onlyInput('email');
+}
+
 
     public function logout(Request $request)
     {
@@ -88,17 +103,32 @@ public function register(Request $request)
         'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
     ]);
 
-    $user = User::create([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'password' => Hash::make($validated['password']),
-    ]);
+    
+$member = \App\Models\Role::where(
+    'slug',
+    'member'
+)->firstOrFail();
 
-    Auth::login($user);
+$user = \Illuminate\Support\Facades\DB::transaction(
+    function () use ($validated, $member) {
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-    $request->session()->regenerate();
+        $user->roles()->attach($member->id);
 
-    return redirect('/')
-        ->with('success', 'Đăng ký tài khoản thành công!');
+        return $user;
+    }
+);
+
+Auth::login($user);
+
+$request->session()->regenerate();
+
+return redirect('/')
+    ->with('success', 'Đăng ký tài khoản thành công!');
+
 }
 }

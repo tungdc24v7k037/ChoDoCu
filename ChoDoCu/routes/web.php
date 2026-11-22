@@ -8,9 +8,13 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin', [AdminController::class, 'index'])
+    ->middleware(['auth', 'role:admin,super-admin'])
+    ->name('admin');
 Route::get('/', [CategoryController::class, 'index'])->name('home');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])
     ->name('categories.show');

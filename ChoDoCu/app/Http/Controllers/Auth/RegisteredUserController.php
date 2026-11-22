@@ -28,24 +28,55 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+    
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+public function store(Request $request): RedirectResponse
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => [
+            'required',
+            'string',
+            'lowercase',
+            'email',
+            'max:255',
+            'unique:'.User::class
+        ],
+        'password' => [
+            'required',
+            'confirmed',
+            Rules\Password::defaults()
+        ],
+    ]);
 
-        event(new Registered($user));
+    $member = \App\Models\Role::where(
+        'slug',
+        'member'
+    )->firstOrFail();
 
-        Auth::login($user);
+    $user = \Illuminate\Support\Facades\DB::transaction(
+        function () use ($request, $member) {
 
-        return redirect(route('dashboard', absolute: false));
-    }
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            $user->roles()->attach($member->id);
+
+            return $user;
+        }
+    );
+
+    event(new Registered($user));
+
+    Auth::login($user);
+
+    $request->session()->regenerate();
+
+    return redirect(route('dashboard', absolute: false));
+}
+
+
 }
