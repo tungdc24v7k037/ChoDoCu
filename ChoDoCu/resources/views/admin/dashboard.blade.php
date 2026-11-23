@@ -68,9 +68,11 @@
                     báo</button><button data-page="settings"
                     class="nav-item w-full flex gap-3 items-center px-4 py-3 rounded-xl text-sm"><span>⚙</span> Cài
                     đặt</button></nav>
-            <div class="mx-4 mt-10 p-4 rounded-xl bg-indigo-50 dark:bg-slate-800 text-sm"><b>Chế độ demo</b>
-                <p class="text-slate-500 dark:text-slate-400 mt-1">Không có kết nối cơ sở dữ liệu. Mọi số liệu đều là ví
-                    dụ.</p>
+            <div class="mx-4 mt-10 p-4 rounded-xl bg-indigo-50 dark:bg-slate-800 text-sm">
+                <b>Quản trị hệ thống</b>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">
+                    Xin chào, {{ auth()->user()->name }}
+                </p>
             </div>
         </aside>
         <div class="flex-1 lg:ml-64 min-w-0">
@@ -83,13 +85,11 @@
                         ⌕ <input class="ml-2 bg-transparent outline-none w-full" placeholder="Tìm kiếm chức năng..."
                             id="searchNav"></div>
                 </div>
-                <div class="flex gap-3 items-center"><span
-                        class="hidden sm:block text-xs bg-amber-100 text-amber-800 rounded-full px-3 py-1">DỮ LIỆU
-                        DEMO</span><button id="themeBtn"
+                <div class="flex gap-3 items-center"><button id="themeBtn"
                         class="rounded-xl border border-slate-200 dark:border-slate-600 px-3 py-2"
                         title="Sáng / tối">☾</button><span
                         class="rounded-full bg-indigo-100 text-indigo-700 font-bold w-9 h-9 grid place-items-center">AD</span><span
-                        class="hidden sm:block text-sm font-semibold">Admin Demo</span></div>
+                        class="hidden sm:block text-sm font-semibold">{{ auth()->user()->name }}</span></div>
             </header>
             <main class="p-5 lg:p-8 max-w-[1600px] mx-auto">
                 <div class="flex flex-wrap justify-between items-center gap-2 mb-6">
@@ -98,62 +98,140 @@
                         <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">ChoDoCu / Trang quản trị / <span
                                 id="breadcrumb">Tổng quan</span></p>
                     </div>
-                    <div class="text-sm border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2">📅 Dữ liệu
-                        minh họa 2026</div>
+                    <div class="text-sm border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2">
+                        📅 Dữ liệu năm {{ $year }}
+                    </div>
                 </div>
+
                 <section id="dashboard" class="page">
+
+                    <!-- 4 thẻ thống kê -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
+
+                        <!-- Người dùng -->
                         <div class="card p-6">
                             <div class="text-2xl mb-5">♙</div>
                             <p class="text-sm text-slate-500">Người dùng</p>
-                            <div class="flex justify-between items-center mt-2"><b class="text-3xl">3.782</b><span
-                                    class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-lg">↑ 11.01%</span>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <b class="text-3xl">
+                                    {{ number_format($totalUsers, 0, ',', '.') }}
+                                </b>
+                                <span class="text-xs text-slate-400">
+                                    Tổng tài khoản
+                                </span>
                             </div>
                         </div>
+
+                        <!-- Tin đang bán -->
                         <div class="card p-6">
                             <div class="text-2xl mb-5">▤</div>
                             <p class="text-sm text-slate-500">Tin đang bán</p>
-                            <div class="flex justify-between items-center mt-2"><b class="text-3xl">5.359</b><span
-                                    class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-lg">↑ 6.3%</span></div>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <b class="text-3xl">
+                                    {{ number_format($totalListings, 0, ',', '.') }}
+                                </b>
+                                <span class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-lg">
+                                    Đang hiển thị
+                                </span>
+                            </div>
                         </div>
+
+                        <!-- Chờ duyệt -->
                         <div class="card p-6">
                             <div class="text-2xl mb-5">◷</div>
                             <p class="text-sm text-slate-500">Chờ duyệt</p>
-                            <div class="flex justify-between items-center mt-2"><b class="text-3xl">142</b><span
-                                    class="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">Cần xử lý</span>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <b class="text-3xl">
+                                    {{ number_format($pendingListings, 0, ',', '.') }}
+                                </b>
+                                <span class="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">
+                                    Cần xử lý
+                                </span>
                             </div>
                         </div>
+
+                        <!-- Báo cáo -->
                         <div class="card p-6">
                             <div class="text-2xl mb-5">⚑</div>
                             <p class="text-sm text-slate-500">Báo cáo</p>
-                            <div class="flex justify-between items-center mt-2"><b class="text-3xl">23</b><span
-                                    class="text-xs text-rose-600 bg-rose-50 px-2 py-1 rounded-lg">Mới</span></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 xl:grid-cols-5 gap-5 mb-5">
-                        <div class="card p-6 xl:col-span-3">
-                            <h2 class="font-bold text-lg">Tin đăng theo tháng</h2>
-                            <p class="text-sm text-slate-400">Số lượng tin đăng mới</p>
-                            <div id="monthlyChart"></div>
-                        </div>
-                        <div class="card p-6 xl:col-span-2">
-                            <h2 class="font-bold text-lg">Mục tiêu kiểm duyệt</h2>
-                            <p class="text-sm text-slate-400">Tỷ lệ tin đã được xử lý trong tháng</p>
-                            <div id="goalChart"></div>
-                            <div class="grid grid-cols-3 text-center border-t dark:border-slate-700 pt-4 text-sm">
-                                <div>Chờ duyệt<br><b>142</b></div>
-                                <div>Đã duyệt<br><b>2.486</b></div>
-                                <div>Tỷ lệ<br><b>75.55%</b></div>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <b class="text-3xl">
+                                    {{ $totalReports === null ? '—' : number_format($totalReports) }}
+                                </b>
+                                <span class="text-xs text-slate-400">
+                                    Chưa triển khai
+                                </span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Biểu đồ -->
+                    <div class="grid grid-cols-1 xl:grid-cols-5 gap-5 mb-5">
+
+                        <!-- Tin đăng theo tháng -->
+                        <div class="card p-6 xl:col-span-3">
+                            <h2 class="font-bold text-lg">
+                                Tin đăng theo tháng
+                            </h2>
+                            <p class="text-sm text-slate-400">
+                                Số lượng tin đăng mới năm {{ $year }}
+                            </p>
+                            <div id="monthlyChart"></div>
+                        </div>
+
+                        <!-- Kiểm duyệt -->
+                        <div class="card p-6 xl:col-span-2">
+                            <h2 class="font-bold text-lg">
+                                Mục tiêu kiểm duyệt
+                            </h2>
+                            <p class="text-sm text-slate-400">
+                                Ước tính tỷ lệ xử lý tin trong tháng
+                            </p>
+
+                            <div id="goalChart"></div>
+
+                            <div class="grid grid-cols-3 text-center border-t dark:border-slate-700 pt-4 text-sm">
+
+                                <div>
+                                    Chờ duyệt<br>
+                                    <b>{{ number_format($pendingThisMonth) }}</b>
+                                </div>
+
+                                <div>
+                                    Đã duyệt<br>
+                                    <b>{{ number_format($approvedThisMonth) }}</b>
+                                </div>
+
+                                <div>
+                                    Tỷ lệ xử lý<br>
+                                    <b>{{ number_format($moderationRate, 2) }}%</b>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hoạt động hệ thống -->
                     <div class="card p-6 mb-5">
-                        <h2 class="font-bold text-lg">Hoạt động hệ thống</h2>
-                        <p class="text-sm text-slate-400">Xu hướng tin đăng và người dùng</p>
+                        <h2 class="font-bold text-lg">
+                            Hoạt động hệ thống
+                        </h2>
+                        <p class="text-sm text-slate-400">
+                            Xu hướng tin đăng và người dùng năm {{ $year }}
+                        </p>
                         <div id="activityChart"></div>
                     </div>
+
+                    <!-- Tin chờ duyệt gần đây -->
                     <div class="card p-6">
-                        <h2 class="font-bold text-lg mb-4">Tin chờ duyệt gần đây</h2>
+                        <h2 class="font-bold text-lg mb-4">
+                            Tin chờ duyệt gần đây
+                        </h2>
+
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm">
                                 <thead class="text-slate-400 text-left border-b dark:border-slate-700">
@@ -164,11 +242,46 @@
                                         <th>Trạng thái</th>
                                     </tr>
                                 </thead>
-                                <tbody id="recentTable"></tbody>
+
+                                <tbody id="recentTable">
+                                    @forelse ($recentPending as $listing)
+                                    <tr class="border-b dark:border-slate-700">
+
+                                        <td class="py-3 font-medium">
+                                            {{ $listing->title }}
+                                        </td>
+
+                                        <td>
+                                            {{ $listing->user?->name ?? 'Không xác định' }}
+                                        </td>
+
+                                        <td>
+                                            {{ $listing->price !== null
+                                    ? number_format($listing->price, 0, ',', '.') . ' đ'
+                                    : 'Thỏa thuận' }}
+                                        </td>
+
+                                        <td>
+                                            <span class="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">
+                                                Chờ duyệt
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4" class="py-6 text-center text-slate-400">
+                                            Không có tin đăng chờ duyệt.
+                                        </td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
                             </table>
                         </div>
                     </div>
+
                 </section>
+
                 <section id="generic" class="page hidden">
                     <div class="card p-6">
                         <div class="flex flex-wrap gap-3 justify-between mb-5">
@@ -198,61 +311,6 @@
     <div id="toast"
         class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white rounded-xl px-5 py-3 shadow-xl hidden text-sm"></div>
     <script>
-    const data = {
-        listings: {
-            title: 'Quản lý tin đăng',
-            head: ['Mã tin', 'Sản phẩm', 'Người bán', 'Giá', 'Trạng thái'],
-            rows: [
-                ['#1001', 'iPhone 13 Pro', 'Nguyễn Văn A', '8.500.000đ', 'Chờ duyệt'],
-                ['#1002', 'Honda Vision 2022', 'Trần Thị B', '27.000.000đ', 'Đang bán'],
-                ['#1003', 'Laptop Dell XPS', 'Lê Văn C', '12.400.000đ', 'Đã bán'],
-                ['#1004', 'Bàn làm việc gỗ', 'Phạm D', '950.000đ', 'Đang bán']
-            ]
-        },
-        users: {
-            title: 'Quản lý người dùng',
-            head: ['ID', 'Họ tên', 'Email', 'Ngày tham gia', 'Trạng thái'],
-            rows: [
-                ['#01', 'Nguyễn Văn A', 'a@example.com', '02/10/2026', 'Hoạt động'],
-                ['#02', 'Trần Thị B', 'b@example.com', '14/10/2026', 'Hoạt động'],
-                ['#03', 'Lê Văn C', 'c@example.com', '19/10/2026', 'Đã khóa']
-            ]
-        },
-        categories: {
-            title: 'Quản lý danh mục',
-            head: ['ID', 'Danh mục', 'Danh mục cha', 'Số tin', 'Trạng thái'],
-            rows: [
-                ['#01', 'Điện thoại', 'Điện tử', '1.250', 'Hiển thị'],
-                ['#02', 'Xe máy', 'Xe cộ', '930', 'Hiển thị'],
-                ['#03', 'Nội thất', 'Nhà cửa', '412', 'Hiển thị']
-            ]
-        },
-        reports: {
-            title: 'Báo cáo vi phạm',
-            head: ['Mã', 'Nội dung', 'Người báo cáo', 'Ngày', 'Trạng thái'],
-            rows: [
-                ['#R01', 'Tin đăng không đúng mô tả', 'Người dùng A', '01/11/2026', 'Chưa xử lý'],
-                ['#R02', 'Nghi vấn lừa đảo', 'Người dùng B', '02/11/2026', 'Đang xem xét']
-            ]
-        },
-        notifications: {
-            title: 'Thông báo',
-            head: ['ID', 'Tiêu đề', 'Đối tượng', 'Ngày', 'Trạng thái'],
-            rows: [
-                ['#N01', 'Chào mừng đến ChoDoCu', 'Tất cả', '01/11/2026', 'Đã gửi'],
-                ['#N02', 'Bảo trì định kỳ', 'Tất cả', '03/11/2026', 'Bản nháp']
-            ]
-        },
-        settings: {
-            title: 'Cài đặt hệ thống',
-            head: ['Cấu hình', 'Giá trị', 'Mô tả', 'Nhóm', 'Trạng thái'],
-            rows: [
-                ['Tên website', 'ChoDoCu', 'Tên hiển thị', 'Chung', 'Đang dùng'],
-                ['Số ảnh tối đa', '10', 'Mỗi tin đăng', 'Tin đăng', 'Đang dùng'],
-                ['Duyệt tin', 'Bật', 'Kiểm duyệt trước khi đăng', 'Bảo mật', 'Đang dùng']
-            ]
-        }
-    };
     const titles = {
         dashboard: 'Tổng quan hệ thống',
         listings: 'Quản lý tin đăng',
@@ -317,107 +375,129 @@
     document.getElementById('recentTable').innerHTML = data.listings.rows.slice(0, 3).map(r =>
         '<tr class="border-b dark:border-slate-700"><td class="py-4">' + r[1] + '</td><td>' + r[2] + '</td><td>' +
         r[3] + '</td><td><span class="text-indigo-600">' + r[4] + '</span></td></tr>').join('');
-    if (window.ApexCharts) {
-        new ApexCharts(document.querySelector('#monthlyChart'), {
-            chart: {
-                type: 'bar',
-                height: 285,
-                toolbar: {
-                    show: false
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const months = [
+            'T1', 'T2', 'T3', 'T4',
+            'T5', 'T6', 'T7', 'T8',
+            'T9', 'T10', 'T11', 'T12'
+        ];
+
+        const listings = @json($monthlyListings);
+        const users = @json($monthlyUsers);
+        const moderationRate = @json($moderationRate);
+
+        // 1. Biểu đồ tin đăng theo tháng
+        new ApexCharts(
+            document.querySelector('#monthlyChart'), {
+                chart: {
+                    type: 'bar',
+                    height: 280,
+                    toolbar: {
+                        show: false
+                    }
                 },
-                background: 'transparent'
-            },
-            series: [{
-                name: 'Tin đăng',
-                data: [150, 180, 165, 210, 140, 120, 175, 185, 115, 90, 160, 135]
-            }],
-            colors: ['#536dfe'],
-            plotOptions: {
-                bar: {
-                    borderRadius: 7,
-                    columnWidth: '42%'
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            xaxis: {
-                categories: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12']
-            },
-            grid: {
-                borderColor: '#e5e7eb'
-            },
-            tooltip: {
-                theme: 'light'
-            }
-        }).render();
-        new ApexCharts(document.querySelector('#goalChart'), {
-            chart: {
-                type: 'radialBar',
-                height: 310
-            },
-            series: [75.55],
-            colors: ['#536dfe'],
-            plotOptions: {
-                radialBar: {
-                    startAngle: -95,
-                    endAngle: 95,
-                    hollow: {
-                        size: '65%'
-                    },
-                    dataLabels: {
-                        name: {
-                            show: false
-                        },
-                        value: {
-                            fontSize: '32px',
-                            fontWeight: 700,
-                            offsetY: 8
-                        }
+                series: [{
+                    name: 'Tin đăng mới',
+                    data: listings
+                }],
+                xaxis: {
+                    categories: months
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 6,
+                        columnWidth: '42%'
+                    }
+                },
+                colors: ['#6679FF'],
+                dataLabels: {
+                    enabled: false
+                },
+                yaxis: {
+                    min: 0,
+                    labels: {
+                        formatter: value => Math.round(value)
                     }
                 }
-            },
-            labels: ['Đã xử lý']
-        }).render();
-        new ApexCharts(document.querySelector('#activityChart'), {
-            chart: {
-                type: 'area',
-                height: 300,
-                toolbar: {
-                    show: false
-                }
-            },
-            series: [{
-                name: 'Tin đăng',
-                data: [180, 190, 170, 160, 175, 165, 170, 205, 230, 210, 240, 235]
-            }, {
-                name: 'Người dùng',
-                data: [35, 40, 50, 40, 55, 42, 60, 100, 110, 120, 150, 140]
-            }],
-            colors: ['#536dfe', '#a5b4fc'],
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    opacityFrom: .28,
-                    opacityTo: .03
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            xaxis: {
-                categories: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12']
-            },
-            grid: {
-                borderColor: '#e5e7eb'
             }
-        }).render()
-    }
+        ).render();
+
+        // 2. Biểu đồ kiểm duyệt
+        new ApexCharts(
+            document.querySelector('#goalChart'), {
+                chart: {
+                    type: 'radialBar',
+                    height: 240
+                },
+                series: [moderationRate],
+                colors: ['#6679FF'],
+                plotOptions: {
+                    radialBar: {
+                        startAngle: -90,
+                        endAngle: 90,
+                        hollow: {
+                            size: '65%'
+                        },
+                        dataLabels: {
+                            name: {
+                                show: false
+                            },
+                            value: {
+                                offsetY: -5,
+                                fontSize: '26px',
+                                formatter: value =>
+                                    Number(value).toFixed(2) + '%'
+                            }
+                        }
+                    }
+                },
+                labels: ['Đã xử lý']
+            }
+        ).render();
+
+        // 3. Biểu đồ hoạt động hệ thống
+        new ApexCharts(
+            document.querySelector('#activityChart'), {
+                chart: {
+                    type: 'area',
+                    height: 300,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [{
+                        name: 'Tin đăng mới',
+                        data: listings
+                    },
+                    {
+                        name: 'Người dùng mới',
+                        data: users
+                    }
+                ],
+                xaxis: {
+                    categories: months
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                colors: [
+                    '#6679FF',
+                    '#10B981'
+                ],
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ).render();
+
+    });
     </script>
+    +
 </body>
 
 </html>
